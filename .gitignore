@@ -1,0 +1,12 @@
+# Rác hệ điều hành
+.DS_Store
+
+# Pinterest MCP đã ngừng dùng — profile Chrome chứa cookie đăng nhập, TUYỆT ĐỐI không commit
+.pinterest-mcp-own/
+
+# Cache crawler component.gallery — dữ liệu scrape từ site KHÔNG có LICENSE,
+# không đưa lên repo public/teaching. Giữ trên đĩa local, chạy `node crawl.mjs fetch` để tái tạo.
+component-gallery/cache/
+
+# Cấu hình Claude cục bộ theo máy
+.claude/settings.local.json

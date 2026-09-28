@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>UI Refs: Dropdown Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../assets/gallery.css" />
+</head>
+<body>
+<header>
+  <a class="back-link" href="../index.html"><svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Kho lưu trữ</a>
+  <h1 id="page-title"></h1>
+  <p id="page-subtitle"></p>
+</header>
+<main id="app"></main>
+
+<script src="../assets/gallery.js"></script>
+<script>
+const DATA = {
+  title: "UI Refs: Dropdown Menu",
+  subtitle: "Nguồn: Mobbin (24 screen iOS/Web) + component.gallery (49 design system) — dropdown menu: action menu khác select thế nào. Bấm ảnh để phóng to, bấm link để xem bản gốc.",
+  report: {
+    tldr: "Menu các lựa chọn <b>ẩn mặc định</b>, mở ra khi bấm nút — dùng cho <b>actions/navigation</b>, không phải form input. Khi mục đích là chọn giá trị cho form thì đó là <code>Select</code> — tên giống nhau trên app thật nhưng bản chất khác control.",
+    purpose: {
+      items: [
+        { text: "Nhóm các hành động/liên kết liên quan sau 1 nút, ẩn đi đến khi người dùng cần — tiết kiệm không gian và giảm nhiễu cho giao diện chính.", src: "component.gallery" },
+        { text: "Chứa actions hoặc navigation options — không phải control nhập dữ liệu của form.", src: "component.gallery" },
+        { text: "Tái hiện menu kiểu OS (context menu / menu bar) cho thao tác trên 1 đối tượng: rename, share, xoá…", src: "Adrian Roselli" },
+        { text: "Làm overflow cho các hành động phụ ít dùng của 1 object trong app: export, duplicate, move to trash…", src: "Ảnh Mobbin — Sketch · Zoho CRM" }
+      ]
+    },
+    differences: {
+      rows: [
+        { name: "Select", use: "Form input chọn 1 giá trị: đóng thì hiện giá trị đã chọn, mở ra là list options cuộn được — thay thế <select> native trong form.", src: "component.gallery" },
+        { name: "Menu / Dropdown menu", use: "Nút bấm mở list actions/navigation — không gắn với giá trị input nào cả.", src: "component.gallery" },
+        { name: "Listbox", use: "Bản ARIA của select, không bị browser giới hạn kiểu option (được thêm avatar, metadata…).", src: "Adrian Roselli" },
+        { name: "Combobox", use: "Textbox + listbox: vừa gõ vừa chọn — khi options quá nhiều hoặc cần nhập giá trị tự do.", src: "Adrian Roselli" },
+        { name: "Autocomplete", use: "Gợi ý khi gõ, thường cần gọi server — nhu cầu «chọn từ nhiều option» nhưng theo thời gian thực.", src: "Adrian Roselli" },
+        { name: "Disclosure / details", use: "Chỉ ẩn/hiện nội dung (aria-expanded) — không có list options để chọn.", src: "Adrian Roselli" },
+        { name: "Accordion", use: "Nhiều disclosure widget xếp chồng cho các section nội dung dài.", src: "Adrian Roselli" }
+      ],
+      note: "Đây là 7/11 pattern Adrian Roselli liệt kê hay bị gọi chung là «drop-down» — còn lại: datalist, ARIA menu/menubar, fly-out navigation, custom display selector. Open UI cũng ghi nhận ranh giới menu vs dropdown chưa thống nhất giữa các DS (Boosted gọi là «Dropdowns (menu)»)."
+    },
+    states: {
+      rows: [
+        { name: "Collapsed (đóng)", desc: "Mặc định: options ẩn, chỉ thấy trigger; disclosure dùng aria-expanded=\"false\".", src: "component.gallery · Adrian Roselli" },
+        { name: "Open / Expanded", desc: "Menu hiện ra neo vào trigger, aria-expanded=\"true\". Open UI thống kê các DS hỗ trợ: basic menu (11 DS), có section (10), cho selection (8), nested submenu (7), collapsible (1).", src: "Adrian Roselli · Open UI" },
+        { name: "Item hover / selected", desc: "Item được trỏ có nền highlight; item đang chọn thêm checkmark (HelloFresh highlight + ✓; NBA, Artsy, timespent dùng ✓).", src: "Ảnh Mobbin — HelloFresh · NBA" },
+        { name: "Item disabled", desc: "Item không khả dụng vẫn hiện nhưng mờ, không bấm được (Gemini: «Model: 3 Flash»).", src: "Ảnh Mobbin — Google Gemini" },
+        { name: "Destructive / danger", desc: "Hành động phá huỷ là item riêng chữ đỏ, tách nhóm cuối menu sau separator (Delete của Claude, Coda, Sketch; Move to Trash của Zoho).", src: "Ảnh Mobbin — Claude · Coda · Zoho CRM" },
+        { name: "Toggle trong item", desc: "Một số menu nhúng switch cho chế độ bật/tắt nhanh ngay trên item (TikTok: Auto scroll).", src: "Ảnh Mobbin — TikTok" }
+      ],
+      note: "Không guideline nào trong 2 nguồn đã tóm liệt kê bộ state UI chuẩn (hover/focus spec) cho dropdown menu — Roselli chỉ nhắc aria-expanded, Open UI là research matrix. 4 state cuối quan sát từ ảnh Mobbin; cần tra usage guideline từng DS (Atlassian, Visa…) nếu cần spec đầy đủ."
+    },
+    naming: {
+      headline: "49 example trên component.gallery dùng 19 tên khác nhau cho component này.",
+      bars: [
+        { name: "Dropdown", count: 17 },
+        { name: "Menu", count: 11 },
+        { name: "Dropdown menu (gộp 2 cách viết hoa)", count: 5 },
+        { name: "Listbox", count: 2 },
+        { name: "Còn lại 14 biến thể (mỗi tên 1 DS)", count: 14 }
+      ],
+      camps: [
+        { name: "Phe «Dropdown»", ds: "Bootstrap · Bulma · Fluent UI · Gestalt · PatternFly · Ant Design · Nord · Shoelace" },
+        { name: "Phe «Menu»", ds: "Polaris · Workday Canvas · Ariakit · Blueprint · Geist · Paste · Forma 36" },
+        { name: "Tên đầy đủ «Dropdown menu»", ds: "Atlassian · Radix · shadcn/ui · Headless UI · Visa" },
+        { name: "Đặt theo vai trò cụ thể", ds: "Carbon — Overflow menu · Dell — Action menu · Elastic — Context menu · eBay — Listbox Button · Reach — Menu button · GitLab — Disclosure" }
+      ],
+      advice: "Đặt tên theo vai trò, đừng dùng chung chung «dropdown»: menu hành động → Menu hoặc Dropdown menu; overflow gắn với 1 object → Overflow menu; chọn giá trị cho form → Select (không gọi là dropdown — Roselli chỉ ra từ này che phủ tới 11 control khác nhau)."
+    },
+    bestPractices: [
+      {
+        group: "Chọn đúng control",
+        items: [
+          { text: "Dropdown menu = actions/navigation; Select = form input chọn giá trị — nếu người dùng phải chọn 1 giá trị rồi submit, dùng Select.", src: "component.gallery" },
+          { text: "Cần vừa gõ vừa chọn hoặc options quá dài → Combobox/Autocomplete, đừng ép vào dropdown.", src: "Adrian Roselli" },
+          { text: "Ưu tiên native HTML (select, details) trước khi custom bằng ARIA.", src: "Adrian Roselli" }
+        ]
+      },
+      {
+        group: "Ngôn ngữ & accessible",
+        items: [
+          { text: "ARIA menu chỉ dùng cho menu kiểu OS, không dùng cho site navigation; cùng 1 control được screen reader announce khác nhau mỗi platform (macOS/iOS: «pop-up button», JAWS/NVDA: «combobox») → phải test thật.", src: "Adrian Roselli" },
+          { text: "Không dùng từ «drop-down» trong docs hay handoff — gọi đúng tên control để dev và user hiểu đúng.", src: "Adrian Roselli" },
+          { text: "Label action viết dạng động từ (Rename, Duplicate, Move to Trash) — cách các app thật đang làm.", src: "Ảnh Mobbin — Coda · Zoho CRM" }
+        ]
+      },
+      {
+        group: "Cấu trúc menu (quan sát từ app thật)",
+        items: [
+          { text: "Nhóm item liên quan bằng section header/separator; action phá huỷ tách nhóm cuối cùng.", src: "Ảnh Mobbin — Zapier · Google Photos" },
+          { text: "Menu giàu tính năng: phím tắt canh phải (Coda, Zoho), submenu (Chronicle, Google Photos), toggle nhúng (TikTok), color picker nhúng (Trello).", src: "Ảnh Mobbin" }
+        ]
+      }
+    ],
+    note: "Nguồn guideline mỏng hơn đa số component khác: component.gallery không có bài usage-guidelines riêng cho dropdown menu, resources chỉ có 2 link (đã tóm sẵn trong cache); Open UI là research matrix nên gần như không cho best practice. Điểm thiếu: bộ state UI đầy đủ (focus, keyboard interaction) — xem mục Design System bên dưới để tra docs gốc từng DS."
+  },
+  taxonomy: {
+    source: "component.gallery",
+    sourceUrl: "https://component.gallery/components/dropdown-menu/",
+    aliases: ["Select menu"],
+    nameDistribution: { "Dropdown": 17, "Menu": 11, "Dropdown menu": 3, "Listbox": 2, "Dropdown Menu": 2, "Menubar": 1, "Overflow menu": 1, "OptionsMenu": 1, "Action menu": 1, "Listbox Button": 1, "Context menu": 1, "Select Menu": 1, "ContextualMenu": 1, "Menu list": 1, "Content menu": 1, "Disclosure": 1, "Dropdown Button": 1, "Menu button": 1, "Select box": 1 },
+    techFacets: { "React": 30, "Web Components": 11, "Sass": 6, "Vue": 6, "CSS": 6, "CSS-in-JS": 4, "Tailwind CSS": 4, "Angular": 3, "Mobile": 3, "Vanilla JS": 2, "Svelte": 2, "Ember": 1, "Handlebars": 1 },
+    featureFacets: { "Code examples": 42, "Open source": 41, "Usage guidelines": 22, "Accessibility": 19, "Tone of voice": 6, "Accessibility issues": 4, "Unmaintained": 2 }
+  },
+  sections: [
+    {
+      name: "Mobbin iOS — Menu chọn giá trị (select-style)",
+      layout: "grid",
+      items: [
+        { app: "Hims", platform: "ios", image: "../assets/shots/dropdown-menu/01.webp", sourceImage: "https://mobbin.com/api/mcp/short/TylWnDEJ", url: "https://mobbin.com/screens/2f7e9398-e3c0-4f69-ab70-8cd7facb5b62", alt: "Dropdown chọn state trong form checkout" },
+        { app: "timespent", platform: "ios", image: "../assets/shots/dropdown-menu/02.webp", sourceImage: "https://mobbin.com/api/mcp/short/bqjPWhrW", url: "https://mobbin.com/screens/d63e7531-d495-4876-aea3-00dee9a89978", alt: "Menu view-options, item đang chọn có checkmark" },
+        { app: "NBA", platform: "ios", image: "../assets/shots/dropdown-menu/03.webp", sourceImage: "https://mobbin.com/api/mcp/short/THZcgydX", url: "https://mobbin.com/screens/1b5a13bc-6d2d-4834-af85-325e30283537", alt: "Dropdown filter Transaction type neo dưới field" },
+        { app: "Artsy", platform: "ios", image: "../assets/shots/dropdown-menu/04.webp", sourceImage: "https://mobbin.com/api/mcp/short/t5ASRQzE", url: "https://mobbin.com/screens/b6c635c1-ed66-41a0-b48f-e067160c00c7", alt: "Dropdown chọn country trong form, item chọn có checkmark" },
+        { app: "Tesla Robotaxi", platform: "ios", image: "../assets/shots/dropdown-menu/05.webp", sourceImage: "https://mobbin.com/api/mcp/short/uCwHdnqJ", url: "https://mobbin.com/screens/5b540976-2540-4dd8-a81c-7e405bc9cdc8", alt: "Select Report a Lost Item mở menu ngay dưới field" }
+      ]
+    },
+    {
+      name: "Mobbin iOS — Action menu (mở từ nút ⋯)",
+      layout: "grid",
+      items: [
+        { app: "Claude", platform: "ios", image: "../assets/shots/dropdown-menu/06.webp", sourceImage: "https://mobbin.com/api/mcp/short/iINNXQvJ", url: "https://mobbin.com/screens/804591d7-8663-44b3-8153-3d7fe91d26b7", alt: "Context menu với icon, Delete đỏ" },
+        { app: "Patreon", platform: "ios", image: "../assets/shots/dropdown-menu/07.webp", sourceImage: "https://mobbin.com/api/mcp/short/BG7GaMOX", url: "https://mobbin.com/screens/9f7ab8b5-73c3-44e4-91e6-f7c274283418", alt: "Kebab menu creator, item destructive Report đỏ" },
+        { app: "Google Photos", platform: "ios", image: "../assets/shots/dropdown-menu/08.webp", sourceImage: "https://mobbin.com/api/mcp/short/BGZ5L8j0", url: "https://mobbin.com/screens/03889726-a820-48b9-9141-1b401ebe6f20", alt: "Menu có submenu Create (mũi tên ›)" },
+        { app: "Google Gemini", platform: "ios", image: "../assets/shots/dropdown-menu/09.webp", sourceImage: "https://mobbin.com/api/mcp/short/gIaNLbn4", url: "https://mobbin.com/screens/4e1eb4aa-404c-4eca-aa73-4fd745eaf618", alt: "Menu có item disabled (Model: 3 Flash)" },
+        { app: "X", platform: "ios", image: "../assets/shots/dropdown-menu/10.webp", sourceImage: "https://mobbin.com/api/mcp/short/echwUQxu", url: "https://mobbin.com/screens/78879978-8ffa-4a15-8629-f1ab3f378eee", alt: "Menu dài nhiều mục cho post, icon bên phải" },
+        { app: "The Infatuation", platform: "ios", image: "../assets/shots/dropdown-menu/11.webp", sourceImage: "https://mobbin.com/api/mcp/short/koaiTh9J", url: "https://mobbin.com/screens/21095726-e204-4196-96d0-65a486f1d1d4", alt: "Biến thể iOS: action list dạng bottom sheet" }
+      ]
+    },
+    {
+      name: "Mobbin Web — Menu chọn giá trị (select/combobox)",
+      layout: "grid",
+      items: [
+        { app: "HelloFresh", platform: "web", image: "../assets/shots/dropdown-menu/12.webp", sourceImage: "https://mobbin.com/api/mcp/short/2c4108MV", url: "https://mobbin.com/screens/48e245e0-921a-4358-995c-7daa1faf6046", alt: "Select frequency: item chọn có highlight + checkmark" },
+        { app: "Dropbox Dash", platform: "web", image: "../assets/shots/dropdown-menu/13.webp", sourceImage: "https://mobbin.com/api/mcp/short/YgEpvb3X", url: "https://mobbin.com/screens/31caee8f-e855-4788-b6fc-1c819b16a845", alt: "Select vai trò mở hướng lên trên field" },
+        { app: "Employment Hero", platform: "web", image: "../assets/shots/dropdown-menu/14.webp", sourceImage: "https://mobbin.com/api/mcp/short/EH9Le1IE", url: "https://mobbin.com/screens/44ea903e-55c1-4a02-8430-30682ec50acc", alt: "Select có ô search trong panel" },
+        { app: "Revolut Business", platform: "web", image: "../assets/shots/dropdown-menu/15.webp", sourceImage: "https://mobbin.com/api/mcp/short/huj0sjMv", url: "https://mobbin.com/screens/3c7b4586-70ce-4e4e-956a-7c10b14cddca", alt: "Select dark mode + search + link phụ «My business type isn't listed»" },
+        { app: "Zoom", platform: "web", image: "../assets/shots/dropdown-menu/16.webp", sourceImage: "https://mobbin.com/api/mcp/short/Wi2ha6VD", url: "https://mobbin.com/screens/78f0263e-4183-4162-b5c1-d9e157dd3761", alt: "Dropdown heading style: item preview đúng style sẽ áp" }
+      ]
+    },
+    {
+      name: "Mobbin Web — Dropdown menu (action menu) đúng nghĩa design system",
+      layout: "grid",
+      items: [
+        { app: "Zapier", platform: "web", image: "../assets/shots/dropdown-menu/17.webp", sourceImage: "https://mobbin.com/api/mcp/short/NDVYsqUz", url: "https://mobbin.com/screens/3cc85081-48d9-47f4-b4c8-e37d8108bc97", alt: "Menu theo nhóm (Sort / Create field / Zaps / Permissions)" },
+        { app: "Chronicle", platform: "web", image: "../assets/shots/dropdown-menu/18.webp", sourceImage: "https://mobbin.com/api/mcp/short/LOpOu0Oc", url: "https://mobbin.com/screens/1f8f9666-9d94-4716-b861-88b3e436007b", alt: "Menu có submenu Heading → Small/Medium/Large" },
+        { app: "Charma", platform: "web", image: "../assets/shots/dropdown-menu/19.webp", sourceImage: "https://mobbin.com/api/mcp/short/xAJuXug9", url: "https://mobbin.com/screens/74318368-6a71-4de3-a7a5-077d4a9ea5db", alt: "Split button «Add item ▾» mở menu action" },
+        { app: "Coda", platform: "web", image: "../assets/shots/dropdown-menu/20.webp", sourceImage: "https://mobbin.com/api/mcp/short/e3stp6m9", url: "https://mobbin.com/screens/ca8ed6c2-c630-4886-9679-193f1e74363c", alt: "Kebab menu doc: phím tắt canh phải, Delete đỏ" },
+        { app: "Zoho CRM", platform: "web", image: "../assets/shots/dropdown-menu/21.webp", sourceImage: "https://mobbin.com/api/mcp/short/jNUKuJoa", url: "https://mobbin.com/screens/2b41d79b-ae20-483f-a40d-79246f353d6b", alt: "Menu file: nhóm, icon, phím tắt, submenu, Move to Trash đỏ cuối" },
+        { app: "Sketch", platform: "web", image: "../assets/shots/dropdown-menu/22.webp", sourceImage: "https://mobbin.com/api/mcp/short/SMx0zpLV", url: "https://mobbin.com/screens/4b7875fc-3502-4267-9b34-4417e7f4d177", alt: "Kebab menu thẻ document: nhóm DOCUMENT / Settings" },
+        { app: "Trello", platform: "web", image: "../assets/shots/dropdown-menu/23.webp", sourceImage: "https://mobbin.com/api/mcp/short/6StuWpkq", url: "https://mobbin.com/screens/01886c86-2c0b-4b77-b22d-9da09f8c96b1", alt: "List actions menu: action + color picker + automation nhúng" },
+        { app: "TikTok", platform: "web", image: "../assets/shots/dropdown-menu/24.webp", sourceImage: "https://mobbin.com/api/mcp/short/gQFOMXSB", url: "https://mobbin.com/screens/44aa2692-ead4-4169-b728-d0896bf2a3ca", alt: "Menu video có toggle Auto scroll ngay trong menu" }
+      ]
+    },
+    {
+      name: "Component Gallery — cách các design system khác gọi/thiết kế Dropdown menu",
+      layout: "grid",
+      items: [
+        { app: "Ant Design", platform: "cg", image: "https://component.gallery/_astro/CtYUalIo3D9vbEOiL0EXFQmD6dJHv89hpQVNIn6Md9g_Z24U1pT.webp", url: "https://ant.design/components/dropdown", alt: "Dropdown — Ant Design" },
+        { app: "Atlassian Design System", platform: "cg", image: "https://component.gallery/_astro/7ioV1tlaeLzrW1YP_OVqOjJ0zdalmzGNCPHoMmzkVDY_Zv9JoH.webp", url: "https://atlassian.design/components/dropdown-menu/examples", alt: "Dropdown menu — Atlassian" },
+        { app: "Carbon Design System", platform: "cg", image: "https://component.gallery/_astro/STFGVK-le0UguV_yelu9kcOgG7DItU-HD5wWpmp916U_2b0hB9.webp", url: "https://carbondesignsystem.com/components/overflow-menu/usage/", alt: "Overflow menu — Carbon" },
+        { app: "Fluent UI", platform: "cg", image: "https://component.gallery/_astro/TyvfIun0dzX8nFuL3UkMHDN74wJe-d9-tlU3hU_PD4c_ZR1YVd.webp", url: "https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu", alt: "ContextualMenu — Fluent UI" },
+        { app: "Polaris", platform: "cg", image: "https://component.gallery/_astro/lTcPZ8q_SIcc_p0O3vpTJFVI55wy0XRcCBL3oJCGlUw_ZVDzew.webp", url: "https://shopify.dev/docs/api/app-home/web-components/actions/menu", alt: "Menu — Polaris" },
+        { app: "Radix Primitives", platform: "cg", image: "https://component.gallery/_astro/TOy49jYe_u7CYZi_xpCnjf3sxIeATLZZrl4t9FsLWf8_Z1a10vr.webp", url: "https://radix-ui.com/primitives/docs/components/dropdown-menu", alt: "Dropdown menu — Radix" },
+        { app: "shadcn/ui", platform: "cg", image: "https://component.gallery/_astro/mAe76L__WKqaZJcONHC1cd4xEfWa8kmv1RBZMlFZwmo_1JrikV.webp", url: "https://ui.shadcn.com/docs/components/dropdown-menu", alt: "Dropdown Menu — shadcn/ui" },
+        { app: "eBay MIND Patterns", platform: "cg", image: "https://component.gallery/_astro/6WFOjS0CCdVgTFQvrpiCobnyZsNZEi6mpMvIdnUvG3U_ZLPGsR.webp", url: "https://ebay.gitbook.io/mindpatterns/input/listbox-button", alt: "Listbox Button — eBay MIND Patterns" },
+        { app: "Reach UI", platform: "cg", image: "https://component.gallery/_astro/Yz9T2r_t05pWCsgBF8M7hije6s8olNdHV3UgFiB99mw_Z2k8bPm.webp", url: "https://reach.tech/menu-button", alt: "Menu button — Reach UI" },
+        { app: "Workday Canvas", platform: "cg", image: "https://component.gallery/_astro/Jt1zyRBhHmO64qA1t6jbw4wSNf_Z6a_OzIdsLlTaPuQ_dcQpu.webp", url: "https://canvas.workday.com/components/popups/menu", alt: "Menu — Workday Canvas" }
+      ]
+    }
+  ],
+  sources: [
+    { label: "component.gallery — Dropdown menu", url: "https://component.gallery/components/dropdown-menu/", note: "49 ví dụ từ các design system, cache 2026-09-23" },
+    { label: "Adrian Roselli — Stop Using 'Drop-down'", url: "https://adrianroselli.com/2020/03/stop-using-drop-down.html", note: "tóm tắt bằng máy từ bài gốc (cache resourceSummaries)" },
+    { label: "Open UI — Menu research", url: "https://open-ui.org/components/menu.research", note: "research matrix 5 concept menu qua các design system" },
+    { label: "Ảnh Mobbin — quan sát state/cấu trúc từ screen trong gallery", url: "https://mobbin.com", note: "src dạng «Ảnh Mobbin — <tên app>»; 24 screen đã tải về assets/shots/dropdown-menu/" },
+    { label: "Mobbin — search_screens", url: "https://mobbin.com", note: "24 screen iOS + Web, query «dropdown menu» & «overflow kebab menu», ảnh đã tải về repo 2026-09-23" }
+  ]
+};
+
+MobbinGallery.render(DATA);
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Kho lưu trữ UI Pattern Refs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="assets/gallery.css" />
+</head>
+<body>
+<header>
+  <h1>Kho lưu trữ UI Pattern Refs</h1>
+  <p>Tất cả research đã lưu từ Mobbin MCP, chia theo loại. Bấm vào 1 mục để mở lại data đã research.</p>
+</header>
+
+<div id="archive"></div>
+
+<script>
+/**
+ * Mỗi lần lưu 1 research mới, thêm 1 entry vào mảng ARCHIVE này.
+ * - category: "flow" (nhiều bước, dùng search_flows) hoặc "component" (1 màn hình/1 pattern, dùng search_screens)
+ * - dataHref: đường dẫn tới file JSON gốc trong data/ (nguồn để sửa/tái sử dụng)
+ * - href: đường dẫn tới trang gallery đã render trong research/
+ * - thumbnail: ảnh đại diện (thường lấy ảnh đầu tiên trong research đó)
+ * - platforms: mảng "ios" | "web" để hiện badge
+ */
+const ARCHIVE = [
+  // Thêm entry mới vào ĐẦU mảng — schema xem .claude/skills/_shared/ARCHIVE-CONVENTIONS.md
+  // thumbnail giờ là ảnh local: "assets/shots/<slug>/NN.webp" (bỏ tiền tố ../ so với data)
+  {
+    slug: "places-map-search",
+    category: "flow",
+    title: "Tìm kiếm địa điểm từ bản đồ",
+    date: "2026-09-25",
+    itemCount: 36,
+    platforms: ["ios", "web"],
+    thumbnail: "assets/shots/places-map-search/01.webp",
+    href: "research/places-map-search.html",
+    dataHref: "data/places-map-search.json"
+  },
+  {
+    slug: "dropdown-menu",
+    category: "component",
+    title: "Dropdown Menu",
+    date: "2026-09-23",
+    itemCount: 34,
+    platforms: ["ios", "web", "cg"],
+    thumbnail: "assets/shots/dropdown-menu/17.webp",
+    href: "research/dropdown-menu.html",
+    dataHref: "data/dropdown-menu.json"
+  }
+];
+
+const CATEGORY_LABELS = {
+  flow: "Flow",
+  component: "UI Component",
+  test: "Test / So sánh nguồn"
+};
+
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str ?? "";
+  return div.innerHTML;
+}
+
+function badgeHtml(platform) {
+  const label = platform === "ios" ? "iOS" : platform === "web" ? "Web" : platform === "cg" ? "Design System" : platform === "pinterest" ? "Pinterest" : platform;
+  return `<span class="badge ${platform}">${escapeHtml(label)}</span>`;
+}
+
+const HIDDEN_KEY = "mobbin-archive-hidden";
+
+function getHiddenSlugs() {
+  try {
+    return JSON.parse(localStorage.getItem(HIDDEN_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function setHiddenSlugs(slugs) {
+  localStorage.setItem(HIDDEN_KEY, JSON.stringify(slugs));
+}
+
+function hideEntry(event, slug, title) {
+  event.preventDefault();
+  event.stopPropagation();
+  const ok = confirm(
+    `Ẩn "${title}" khỏi kho lưu trữ này?\n\nFile data/${slug}.json và research/${slug}.html vẫn còn nguyên trên đĩa — thao tác này chỉ ẩn mục khỏi danh sách hiển thị (lưu trên trình duyệt này). Muốn xoá hẳn file thì nhờ Claude Code xoá giúp.`
+  );
+  if (!ok) return;
+  const hidden = getHiddenSlugs();
+  if (!hidden.includes(slug)) hidden.push(slug);
+  setHiddenSlugs(hidden);
+  render();
+}
+
+function restoreHidden() {
+  setHiddenSlugs([]);
+  render();
+}
+
+function archiveCardHtml(entry) {
+  return `
+    <a class="archive-card" href="${entry.href}">
+      <button type="button" class="archive-delete-btn" title="Ẩn khỏi kho lưu trữ" onclick='hideEntry(event, ${JSON.stringify(entry.slug)}, ${JSON.stringify(entry.title)})'>✕</button>
+      <img class="archive-thumb" src="${entry.thumbnail}" alt="${escapeHtml(entry.title)}" loading="lazy">
+      <div class="archive-body">
+        <div class="archive-title">${escapeHtml(entry.title)}</div>
+        <div class="archive-meta">
+          <span>${entry.date}</span>
+          <span>•</span>
+          <span>${entry.itemCount} refs</span>
+          <div class="archive-tags">${entry.platforms.map(badgeHtml).join("")}</div>
+        </div>
+        <div class="archive-links">
+          <span>Mở gallery<svg class="icon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+        </div>
+      </div>
+    </a>
+  `;
+}
+
+function collectionHtml(category, entries) {
+  return `
+    <div class="archive-collection">
+      <h2 class="section-title">${escapeHtml(CATEGORY_LABELS[category] || category)}</h2>
+      <div class="archive-grid">
+        ${entries.map(archiveCardHtml).join("")}
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  const container = document.getElementById("archive");
+  const hidden = getHiddenSlugs();
+  const visible = ARCHIVE.filter((e) => !hidden.includes(e.slug));
+
+  let html = "";
+  if (!visible.length) {
+    html += '<p class="empty">Chưa có research nào được lưu.</p>';
+  } else {
+    const categories = ["flow", "component", "test"];
+    html += categories
+      .map((cat) => ({ cat, entries: visible.filter((e) => e.category === cat) }))
+      .filter(({ entries }) => entries.length > 0)
+      .map(({ cat, entries }) => collectionHtml(cat, entries))
+      .join("");
+  }
+  if (hidden.length) {
+    html += `<p class="restore-hint">Đã ẩn ${hidden.length} mục · <a href="#" onclick="restoreHidden(); return false;">hiện lại</a></p>`;
+  }
+  container.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Flow Refs: Tìm kiếm địa điểm từ bản đồ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../assets/gallery.css" />
+</head>
+<body>
+<header>
+  <a class="back-link" href="../index.html"><svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Kho lưu trữ</a>
+  <h1 id="page-title"></h1>
+  <p id="page-subtitle"></p>
+</header>
+<main id="app"></main>
+
+<script src="../assets/gallery.js"></script>
+<script>
+const DATA = {
+  title: "Flow Refs: Tìm kiếm địa điểm từ bản đồ (iOS + web)",
+  subtitle: "Nguồn: Mobbin — 9 flow từ 7 app: Places, Tock, corner, Chick-fil-A (iOS) · Airbnb, PamPam, Klook (web). Cùng một hành trình: xem bản đồ → search → gợi ý → kết quả → detail. Bấm ảnh để phóng to, bấm link để xem bản gốc.",
+  sections: [
+    {
+      name: "Places — Searching Places (5 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Places",
+          platform: "ios",
+          step: 1,
+          image: "../assets/shots/places-map-search/01.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/l3mSM3jq",
+          url: "https://mobbin.com/flows/64e98700-11fe-4926-b935-60de08c0e195",
+          alt: "Tab Map (California): search bar nổi trên bản đồ, chip filter (Dragons, Table Tonight, Newly opened), pin POI là ảnh thu nhỏ (nhà hàng, khách sạn, lodge), pin đang chọn phóng to, detail card SingleThread Farm (Open now, chip Three Michelin stars)"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 2,
+          image: "../assets/shots/places-map-search/02.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/1I5GxFfe",
+          url: "https://mobbin.com/flows/64e98700-11fe-4926-b935-60de08c0e195",
+          alt: "Bấm search (query trống): empty state gợi ý truy vấn kiểu du lịch (Beaches in Greece, New York bars, Nightclubs in Ibiza…), link «Back to the map», bàn phím hiện"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 3,
+          image: "../assets/shots/places-map-search/03.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/NM0ufIzV",
+          url: "https://mobbin.com/flows/64e98700-11fe-4926-b935-60de08c0e195",
+          alt: "Gõ «Cafe»: autocomplete chia 2 nhóm — hoàn tất truy vấn (Cafe, Cafes, Cafeterias, Cafes to work from) và địa điểm cụ thể có ảnh + địa chỉ (NM Cafe, Cafe 220 — Palo Alto)"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 4,
+          image: "../assets/shots/places-map-search/04.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/FET4WwEg",
+          url: "https://mobbin.com/flows/64e98700-11fe-4926-b935-60de08c0e195",
+          alt: "Tiếp tục gõ: kết quả place toàn cầu (Café Vins London, Cafe London, Cafelândia Brazil…) — place chưa có ảnh minh bạch bằng icon pin xám"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 5,
+          image: "../assets/shots/places-map-search/05.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/9Pf2R7ZT",
+          url: "https://mobbin.com/flows/64e98700-11fe-4926-b935-60de08c0e195",
+          alt: "Chọn Café Vins → map zoom về London, 1 pin ảnh duy nhất giữa map, detail card: COFFEE SHOP, Closed until 8am, mô tả, chip đặc điểm (Specialty coffee, Curated bookstore)"
+        }
+      ]
+    },
+    {
+      name: "Places — Map (4 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Places",
+          platform: "ios",
+          step: 1,
+          image: "../assets/shots/places-map-search/06.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/lXLiEimD",
+          url: "https://mobbin.com/flows/00810ee1-3b0d-41d0-b5a5-5fd1883a571b",
+          alt: "Tab Search của Places: logo chữ + rồng, chip gợi ý truy vấn (ảnh mini, «Brunch reservations on Sunday in San Jose», «Espresso bar…»), ô search lớn «What are you looking for?» kèm nút mic, tab dưới: Search / Map / Discover / People / Profile"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 2,
+          image: "../assets/shots/places-map-search/07.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/L6SNA5v4",
+          url: "https://mobbin.com/flows/00810ee1-3b0d-41d0-b5a5-5fd1883a571b",
+          alt: "Tab Map (Palo Alto): search bar nổi + chip Table Tonight / Newly opened / Saved, pin POI dạng ảnh thu nhỏ (Farmhouse Kitchen, Zaytinya), pin Ettan đang chọn phóng to, detail card Ettan (INDIAN RESTAURANT, Open until 9pm, chip Cal-Indian fusion / Cathedral skylight, bookmark)"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 3,
+          image: "../assets/shots/places-map-search/08.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/wDoM07iT",
+          url: "https://mobbin.com/flows/00810ee1-3b0d-41d0-b5a5-5fd1883a571b",
+          alt: "Map California: search bar, chip filter (Dragons, Table Tonight, Newly opened), pin POI ảnh thu nhỏ rải khắp vùng, detail card SingleThread Farm (Open now, chip Three Michelin stars) — cùng màn mở đầu flow Searching Places"
+        },
+        {
+          app: "Places",
+          platform: "ios",
+          step: 4,
+          image: "../assets/shots/places-map-search/09.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/fX8eM3Al",
+          url: "https://mobbin.com/flows/00810ee1-3b0d-41d0-b5a5-5fd1883a571b",
+          alt: "Zoom out toàn California: pin ảnh từ Lake Tahoe tới vịnh SF (Harbor House Inn, The Ritz-Carlton Lake Tahoe, Rush Creek Lodge, El Capitan Hotel, Dream Inn…), pin Benu đang chọn (logo rồng), detail card Benu (NEW AMERICAN RESTAURANT, Closed, Three Michelin stars, bookmark)"
+        }
+      ]
+    },
+    {
+      name: "Tock — Searching (via map) (3 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Tock",
+          platform: "ios",
+          step: 1,
+          image: "../assets/shots/places-map-search/10.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/1W5UUc0L",
+          url: "https://mobbin.com/flows/f788e41e-d5b1-4ad5-93d6-ffa99e0123e7",
+          alt: "Map New York (Tock — app đặt bàn): pin xanh nhà hàng dày quanh Lower Manhattan/Jersey City, card đặt bàn Tsubame — Chef's Counter (500 Warren, New York) ở đáy"
+        },
+        {
+          app: "Tock",
+          platform: "ios",
+          step: 2,
+          image: "../assets/shots/places-map-search/11.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/y11YO5vo",
+          url: "https://mobbin.com/flows/f788e41e-d5b1-4ad5-93d6-ffa99e0123e7",
+          alt: "Search trên map: search bar + filter Today · 6:30 PM · 2 guests · Reservations ở đáy, pill «Search this area» nổi trên map, pin vẫn hiện"
+        },
+        {
+          app: "Tock",
+          platform: "ios",
+          step: 3,
+          image: "../assets/shots/places-map-search/12.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/ZtoQxNKE",
+          url: "https://mobbin.com/flows/f788e41e-d5b1-4ad5-93d6-ffa99e0123e7",
+          alt: "Chọn pin → detail Azalea (3.6 mi · New York, Cuisine: Italian) đè lên map: ảnh, block Reservation (Today, Feb 10 · 2 guests), pin đang chọn thành icon dao nĩa đen"
+        }
+      ]
+    },
+    {
+      name: "corner — Searching for places in an area (6 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "corner",
+          platform: "ios",
+          step: 1,
+          image: "../assets/shots/places-map-search/13.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/5Gb4Em8N",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Map San Francisco (corner): search bar đen nổi trên map, pill «searching» có spinner (tự search theo vùng đang xem), chip category dưới đáy: restaurant / café / bar / shop / cultural"
+        },
+        {
+          app: "corner",
+          platform: "ios",
+          step: 2,
+          image: "../assets/shots/places-map-search/14.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/UmDNsNUs",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Map phủ kín pin ảnh tròn của quán (Good Luck Dim Sum, Sweet Glory, Utoro Sushi, Lobby Bar, Chīsai Sushi Club…), cụm dày chồng lên nhau ở trung tâm, vẫn còn chip category đáy"
+        },
+        {
+          app: "corner",
+          platform: "ios",
+          step: 3,
+          image: "../assets/shots/places-map-search/15.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/uvkv9Evk",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Zoom vào trung tâm SF: pin ảnh dày đặc kèm tên quán (The Interval at Long Now, Mister Jiu's Kitchen, La Connessa, Christine's…), pill «search here» hiện khi đã leo khỏi vùng kết quả"
+        },
+        {
+          app: "corner",
+          platform: "ios",
+          step: 4,
+          image: "../assets/shots/places-map-search/16.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/5K2J5ekw",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Pan ra rìa (Daly City): map trống pin, pill «searching» spinner chạy lại — tự tìm theo vùng map vừa di chuyển tới"
+        },
+        {
+          app: "corner",
+          platform: "ios",
+          step: 5,
+          image: "../assets/shots/places-map-search/17.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/Qvrdq1iS",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Chạm khu vực pin → bottom sheet lật thành feed card ảnh lớn: Arcana (badge trending, tag wine bar / natural wine bar / chill, «saved from instagram · 6 days ago», 81 người lưu, nút want to try / visited), map + «search here» còn trên đầu"
+        },
+        {
+          app: "corner",
+          platform: "ios",
+          step: 6,
+          image: "../assets/shots/places-map-search/18.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/VahTy4Il",
+          url: "https://mobbin.com/flows/9a8a611c-986f-4cc1-86ce-362d0da15252",
+          alt: "Vuốt ngang feed: card Sobakatsu (badge newly opened, tag restaurant, «discovered by stokebuilder · last week», 92 lượt lưu, want to try / visited), card kế tiếp «from friends» hé bên phải"
+        }
+      ]
+    },
+    {
+      name: "Chick-fil-A — Searching a restaurant (6 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 1,
+          image: "../assets/shots/places-map-search/19.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/yKggWPRk",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Map Hyde Park, Chicago: pill «Search this area» + nút locate, bottom sheet «Select a restaurant» — My restaurants (empty: dùng trái tim để lưu quán quen), Nearby: Hyde Park (IL) In-Line — 0.43 miles, Open until 9:00 PM, nút đỏ Start my order"
+        },
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 2,
+          image: "../assets/shots/places-map-search/20.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/1xaNdnwu",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Bấm search: ô tìm kiếm trống + bàn phím đè lên sheet, map vẫn lộ phía sau"
+        },
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 3,
+          image: "../assets/shots/places-map-search/21.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/voKQ21m3",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Gõ «chicago»: state đang tải — logo Chick-fil-A giữa màn, query trong ô search, chưa có kết quả"
+        },
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 4,
+          image: "../assets/shots/places-map-search/22.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/pbZiLTtT",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Kết quả: danh sách chi nhánh Chicago (State and Lake In-Line, Millennium Park, Union Station, Michigan Avenue, Loyola Water Tower, South Loop, University of Illinois, Wicker Park) — mỗi dòng địa chỉ + giờ «Opens at … CDT»"
+        },
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 5,
+          image: "../assets/shots/places-map-search/23.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/Ab2YtBvZ",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Chọn pin trên map → sheet «Select a restaurant»: Millennium Park (IL) In-Line (địa chỉ, Opens at 8:30 AM CDT, loại In-Line) nổi bật với nút View menu; các chi nhánh khác bên dưới"
+        },
+        {
+          app: "Chick-fil-A",
+          platform: "ios",
+          step: 6,
+          image: "../assets/shots/places-map-search/24.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/6BcViS9k",
+          url: "https://mobbin.com/flows/6e93bf2c-daaa-4278-b119-e0283d33b4b6",
+          alt: "Chọn nhầm pin xám (Chicago Union Station): tooltip «This restaurant does not offer Chick-fil-A One®» trên map + banner cảnh báo vàng ngay trong card — state xử lý place không khả dụng"
+        }
+      ]
+    },
+    {
+      name: "Airbnb — Searching map (4 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Airbnb",
+          platform: "web",
+          step: 1,
+          image: "../assets/shots/places-map-search/25.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/2VyDd7ys",
+          url: "https://mobbin.com/flows/06a328b8-1986-4745-964d-59560bc5710c",
+          alt: "«Where you'll be» (web): map zoom rộng thấy Nusa Lembongan + Ceningan + Penida (Bali) — pin nhà tròn đen ở Jungutbatu, nhãn POI theo loại (cafe/restaurant cam, beach xanh, photo point tím), panel trái: mô tả khu vực + Show Host guidebook, control zoom/locate phải"
+        },
+        {
+          app: "Airbnb",
+          platform: "web",
+          step: 2,
+          image: "../assets/shots/places-map-search/26.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/01CXUzlG",
+          url: "https://mobbin.com/flows/06a328b8-1986-4745-964d-59560bc5710c",
+          alt: "Bấm search trên map: popup «Find a place or address» + Cancel, empty state «Find a place on the map» (thêm restaurant/landmark vào map để tham khảo); map zoom vào street-level quanh nhà"
+        },
+        {
+          app: "Airbnb",
+          platform: "web",
+          step: 3,
+          image: "../assets/shots/places-map-search/27.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/WECLJ2t0",
+          url: "https://mobbin.com/flows/06a328b8-1986-4745-964d-59560bc5710c",
+          alt: "Gõ «cafe»: popup gợi ý place (Cafe Pandan — Jungutbatu, Café del Mar — Canggu, Cafe Pantai Nusa Lembongan) với icon loại hình + địa chỉ, map phía sau vẫn sync nhãn quán"
+        },
+        {
+          "app": "Airbnb",
+          "platform": "web",
+          step: 4,
+          image: "../assets/shots/places-map-search/28.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/8k2VWe3t",
+          url: "https://mobbin.com/flows/06a328b8-1986-4745-964d-59560bc5710c",
+          alt: "Chọn Cafe Pandan → card ảnh có carousel nổi trên map: tên + loại Cafe + địa chỉ, pill «15 min» ô tô, đường chấm từ pin nhà tới quán, nút đóng + mũi tên ảnh tiếp"
+        }
+      ]
+    },
+    {
+      name: "PamPam — Searching map (2 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "PamPam",
+          platform: "web",
+          step: 1,
+          image: "../assets/shots/places-map-search/32.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/PrLsrhBW",
+          url: "https://mobbin.com/flows/e0044ab9-d01f-4d55-aa6a-a1f5052acf76",
+          alt: "Map itinerary Tokyo (PamPam): panel trái là section «late night snacking spots» (Ichiran Ramen, Tokyu Plaza Harajuku, Gindaco, Marion Crepes — icon emoji + mô tả), map bên phải sync pin emoji đánh số + đường đi chấm kèm mốc «4 mins», ghi chú vẽ tay «busy street», toolbar vẽ ở đáy"
+        },
+        {
+          app: "PamPam",
+          platform: "web",
+          step: 2,
+          image: "../assets/shots/places-map-search/33.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/KqB0rMC2",
+          url: "https://mobbin.com/flows/e0044ab9-d01f-4d55-aa6a-a1f5052acf76",
+          alt: "Search «kawa» trong map: kết quả hiện trong panel (Kawagoe Street — Stroll around and eat lunch, Kawagoe Hikawa Shrine), map zoom rộng vùng Saitama với 1 pin Kawagoe Street"
+        }
+      ]
+    },
+    {
+      name: "PamPam — Place detail (3 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "PamPam",
+          platform: "web",
+          step: 1,
+          image: "../assets/shots/places-map-search/29.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/qHEWTrIE",
+          url: "https://mobbin.com/flows/d419fcb9-eb89-487c-b56f-b9c656d24da1",
+          alt: "Itinerary «New York City — Day 1: Arrival and Midtown Exploration»: panel trái timeline spots (Breakfast at Ess-a-Bagel, Visit Times Square, Lunch at Junior's…), map NYC phải hiển thị pin emoji + nhãn tương ứng, ô hỏi AI «Ask Pam» ở đáy panel"
+        },
+        {
+          app: "PamPam",
+          platform: "web",
+          step: 2,
+          image: "../assets/shots/places-map-search/30.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/Mw8QP9QV",
+          url: "https://mobbin.com/flows/d419fcb9-eb89-487c-b56f-b9c656d24da1",
+          alt: "Bấm 1 spot → panel chuyển thành detail Ess-a-Bagel: ảnh, địa chỉ, link Google, mô tả, so sánh đánh giá Tourists vs Locals (Foodies approved / Crowded), CTA Plan a trip / Things to do near / More like this; map giữ nguyên context quanh quán"
+        },
+        {
+          app: "PamPam",
+          platform: "web",
+          step: 3,
+          image: "../assets/shots/places-map-search/31.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/wubCeUAE",
+          url: "https://mobbin.com/flows/d419fcb9-eb89-487c-b56f-b9c656d24da1",
+          alt: "Bấm ảnh → lightbox ảnh fullscreen (quầy bagel), nền mờ lộ detail phía sau, nút đóng góc phải"
+        }
+      ]
+    },
+    {
+      name: "Klook — View map (3 bước)",
+      layout: "flow",
+      items: [
+        {
+          app: "Klook",
+          platform: "web",
+          step: 1,
+          image: "../assets/shots/places-map-search/34.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/O82Nqbow",
+          url: "https://mobbin.com/flows/cc4207f6-6677-42bb-9958-b44bd2e18aa1",
+          alt: "Destination page Singapore (Klook web): hero ảnh Universal + nút mở map nhỏ góc phải, category tiles (Zoos & aquariums, Tours, Hotels, Car rentals, Cruises, Parks & gardens), «Don't miss these in Singapore» cards giá + deal"
+        },
+        {
+          app: "Klook",
+          platform: "web",
+          step: 2,
+          image: "../assets/shots/places-map-search/35.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/PGuSMiia",
+          url: "https://mobbin.com/flows/cc4207f6-6677-42bb-9958-b44bd2e18aa1",
+          alt: "Bấm map → Google Maps fullscreen với panel «Don't miss these in Singapore»: top 5 trải nghiệm đánh số (Universal Studios, Gardens by the Bay, S.E.A. Aquarium, Singapore Zoo, Skyline Luge) mỗi card rating + reviews + lượt booked + giá US$; pin đỏ sync trên map"
+        },
+        {
+          app: "Klook",
+          platform: "web",
+          step: 3,
+          image: "../assets/shots/places-map-search/36.webp",
+          sourceImage: "https://mobbin.com/api/mcp/short/c02tflKZ",
+          url: "https://mobbin.com/flows/cc4207f6-6677-42bb-9958-b44bd2e18aa1",
+          alt: "Chọn 1 điểm → popup ArtScience Museum at Marina Bay Sands: rating 4.7, 7,137 reviews, 300k+ booked, giá từ US$16.39, pin đỏ nổi trên map, panel top-5 vẫn mở bên trái"
+        }
+      ]
+    }
+  ]
+};
+
+MobbinGallery.render(DATA);
+</script>
+</body>
+</html>
