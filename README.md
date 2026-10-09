@@ -1,43 +1,47 @@
-# Bước 1 — Điểm xuất phát
+# Bước 2 — Flow login của 2 app iOS trên 1 trang html
 
 ## Prompt vừa chạy
 
-Chưa có — đây là điểm xuất phát.
-
-## Kết quả (hiện có trong folder)
-
-| File | Là gì |
-|---|---|
-| `.mcp.json` | Đã trỏ sẵn tới Mobbin MCP — mở project bằng Claude Code và đồng ý kích hoạt server |
-| `.gitignore` | Những thứ không đưa lên git |
-| `README.md` | File này |
-
-**Điều kiện:** bạn cần tài khoản Mobbin của riêng mình.
-
----
-
-## Prompt 1 — Test MCP
-
-Mở Claude, gõ:
+**Prompt 1**
 
 > Test MCP Mobbin xem chạy chưa
 
-**Cần thấy:** bot gọi được công cụ của Mobbin và có kết quả trả về (dạng JSON thô trên màn hình). **Không cần lưu gì cả** — nhìn output và thinking của bot là đủ.
-
-## Prompt 2 — Crawl flow login, show lên html
-
-Gõ tiếp:
+**Prompt 2**
 
 > Crawl thử flow login của 2 app iOS, show lên 1 file html để check
 
-**Cần thấy:** xuất hiện 1 file html, mở bằng browser được, ảnh các màn hình login xếp theo thứ tự bước, tách theo app.
+## Kết quả
+
+**Sau Prompt 1** — không có file nào. Bot gọi công cụ tìm kiếm của Mobbin và in ra kết quả thô (JSON): tên app, tên flow, link flow trên Mobbin, link ảnh từng màn hình. Thấy được là MCP đã chạy.
+
+**Sau Prompt 2** — thêm 2 thứ:
+
+| File | Là gì |
+|---|---|
+| `preview.html` | Trang html thô: 2 app, mỗi app 1 hàng ảnh theo thứ tự bước, kèm link «Xem flow trên Mobbin» |
+| `shots/grubhub/01–06.jpg` | 6 màn hình login của Grubhub |
+| `shots/dicks/01–04.jpg` | 4 màn hình login của DICK'S Sporting Goods |
+
+Mở `preview.html` bằng browser. Điểm cần quan sát:
+
+- Cùng một mục tiêu (login) nhưng mỗi app một cách giải: Grubhub 6 bước, DICK'S 4 bước, một app nhúng cả webview vào app native
+- Thứ tự màn hình chính là hành trình người dùng — vì thế ảnh phải giữ đúng thứ tự bước
+
+---
+
+## Prompt 3 — Nguồn thứ 2: component.gallery
+
+Dán link này vào Claude kèm câu hỏi:
+
+> Check link này xem có crawl được không, test thử. Có hạn chế gì không?
+> https://component.gallery/components/text-input
+
+**Cần thấy:** bot tự tải thử trang, đọc điều khoản của site, rồi trả lời được 2 ý: crawl được không về kỹ thuật, và được phép dùng tới đâu.
 
 ---
 
 ## Xem đáp án + đề bài tiếp theo
 
 ```
-git restore . && git clean -fd && git checkout step2
+git restore . && git clean -fd && git checkout step3
 ```
-
-*(Lệnh này dọn bản bạn vừa làm và chuyển sang bản chuẩn của bước 2 — bản live của bạn khác bản mẫu là chuyện bình thường: branch là một lời giải, không phải lời giải duy nhất.)*
