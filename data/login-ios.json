@@ -1,0 +1,101 @@
+{
+  "slug": "login-ios",
+  "date": "2026-10-09",
+  "category": "flow",
+  "title": "Flow Refs: Login — 2 app iOS",
+  "subtitle": "Nguồn: Mobbin — cùng mục tiêu đăng nhập, 2 cách giải. Bấm ảnh để phóng to, bấm link để xem bản gốc.",
+  "sections": [
+    {
+      "name": "Grubhub — Login (6 bước)",
+      "layout": "flow",
+      "items": [
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 1,
+          "image": "../assets/shots/login-ios/grubhub/01.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 1"
+        },
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 2,
+          "image": "../assets/shots/login-ios/grubhub/02.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 2"
+        },
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 3,
+          "image": "../assets/shots/login-ios/grubhub/03.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 3"
+        },
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 4,
+          "image": "../assets/shots/login-ios/grubhub/04.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 4"
+        },
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 5,
+          "image": "../assets/shots/login-ios/grubhub/05.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 5"
+        },
+        {
+          "app": "Grubhub",
+          "platform": "ios",
+          "step": 6,
+          "image": "../assets/shots/login-ios/grubhub/06.jpg",
+          "url": "https://mobbin.com/flows/a6539549-d88e-4872-abfc-6505f4d34bfe",
+          "alt": "Grubhub — bước 6"
+        }
+      ]
+    },
+    {
+      "name": "DICK'S Sporting Goods — Login (4 bước)",
+      "layout": "flow",
+      "items": [
+        {
+          "app": "DICK'S Sporting Goods",
+          "platform": "ios",
+          "step": 1,
+          "image": "../assets/shots/login-ios/dicks/01.jpg",
+          "url": "https://mobbin.com/flows/cd6e9382-4797-4f3a-b7ed-8eb163c629e1",
+          "alt": "DICK'S Sporting Goods — bước 1"
+        },
+        {
+          "app": "DICK'S Sporting Goods",
+          "platform": "ios",
+          "step": 2,
+          "image": "../assets/shots/login-ios/dicks/02.jpg",
+          "url": "https://mobbin.com/flows/cd6e9382-4797-4f3a-b7ed-8eb163c629e1",
+          "alt": "DICK'S Sporting Goods — bước 2"
+        },
+        {
+          "app": "DICK'S Sporting Goods",
+          "platform": "ios",
+          "step": 3,
+          "image": "../assets/shots/login-ios/dicks/03.jpg",
+          "url": "https://mobbin.com/flows/cd6e9382-4797-4f3a-b7ed-8eb163c629e1",
+          "alt": "DICK'S Sporting Goods — bước 3"
+        },
+        {
+          "app": "DICK'S Sporting Goods",
+          "platform": "ios",
+          "step": 4,
+          "image": "../assets/shots/login-ios/dicks/04.jpg",
+          "url": "https://mobbin.com/flows/cd6e9382-4797-4f3a-b7ed-8eb163c629e1",
+          "alt": "DICK'S Sporting Goods — bước 4"
+        }
+      ]
+    }
+  ]
+}

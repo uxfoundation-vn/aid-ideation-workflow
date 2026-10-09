@@ -1,0 +1,459 @@
+{
+  "slug": "text-field",
+  "date": "2026-10-09",
+  "category": "component",
+  "title": "UI Refs: Text Field",
+  "subtitle": "Nguồn: The Component Gallery (component.gallery/components/text-input) — 71 ví dụ từ design system thật, nhóm theo tên gọi. Ảnh dẫn link thẳng từ site gốc. Bấm link để mở docs gốc của design system.",
+  "sections": [
+    {
+      "name": "component.gallery — gọi là “Input” (26)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Ant Design",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/-rd93IWSR3ZDSyvrjOCFVqQojzVGAxLOSITmX7Ib4uo_Z9N2Dd.webp",
+          "url": "https://ant.design/components/input"
+        },
+        {
+          "app": "Auro",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/eminpJnqaAQmf4EkxjIo0Fx--4BF_L2aB1gNKDY-a14_Z11GxHm.webp",
+          "url": "https://auro.alaskaair.com/components/auro/input"
+        },
+        {
+          "app": "Base Web",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/HfCDSbBdLJhBYqibMGEeu6Z7H43vbooPFO1vOabk_Bo_Z2wAlfX.webp",
+          "url": "https://baseweb.design/components/input/"
+        },
+        {
+          "app": "Cedar",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/M76cPiMsaYnBUJvsTRlDuFim4s-kDRM293vHFc2ZCgw_2dULtr.webp",
+          "url": "https://cedar.rei.com/components/input"
+        },
+        {
+          "app": "Chakra UI",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/7WiE_DRgcpnRWcF3palNFI1niX9I94UVe-MDQCsn4YQ_Z2oLRW.webp",
+          "url": "https://chakra-ui.com/docs/components/input"
+        },
+        {
+          "app": "Clarity Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/euBvQ6QMaM5keDZxLtstMR6vf1oOc5a_6m4mEmemXZ8_1knAOy.webp",
+          "url": "https://clarity.design/documentation/input"
+        },
+        {
+          "app": "Crayons",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/KsbIV7jnjFGTgc4jskPbUmuJoLNF2M6EcLuoHxnHA2Y_ZFfMSd.webp",
+          "url": "https://crayons.freshworks.com/components/core/input/"
+        },
+        {
+          "app": "Duet Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/5o-2reVKZlJV35bSI7pcR2YDB18S0jvyjWvwEvrSoZo_1DtzC9.webp",
+          "url": "https://www.duetds.com/components/input/"
+        },
+        {
+          "app": "Elisa Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/4e2IG1Xbftm-rWB-0tYNP1hVxh4P-DdvoydwRq73VQQ_2rGDMg.webp",
+          "url": "https://designsystem.elisa.fi/9b207b2c3/p/2530ac-input"
+        },
+        {
+          "app": "Geist Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/nQwO5C4d3pfQwenpMuhlRMeBTDjjgIFW3XLu03YitQs_22pQYf.webp",
+          "url": "https://vercel.com/geist/input"
+        },
+        {
+          "app": "Headless UI",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/PLB8GfI9vy6e5udwggtzJSHJOIsarXYOC2vtNHkcip8_Zp9nx7.webp",
+          "url": "https://headlessui.com/react/input"
+        },
+        {
+          "app": "HeroUI",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/JQJXX3K2Q_rBMDgkHbHDhBonm7BqZzEuN466rU-hC1U_Z1zb5wV.webp",
+          "url": "https://www.heroui.com/docs/components/input"
+        },
+        {
+          "app": "Lightning Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/Mqvbf37KZeJtg3Y6b52LHS16fBPSM0uoaG_fsk6hJMc_10pQuL.webp",
+          "url": "https://www.lightningdesignsystem.com/components/input/"
+        },
+        {
+          "app": "Morningstar Product System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/kTr6rjJKQFb9i4GI58WaXXIOS_YdDhTyW2ttkMfo_rw_Z5QiH3.webp",
+          "url": "https://design.morningstar.com/systems/product/components/input"
+        },
+        {
+          "app": "Nessie",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/vYgqtxlm9g2cJrwxPDtpUt1_DPYcZnHdzq27QVvr9eI_Z1KBGzi.webp",
+          "url": "https://design.ns.nl/4a05a30ad/p/42af7d-input-"
+        },
+        {
+          "app": "Nord Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/9tsPKmYxXehwBnWV14hxdqeg-AIvOM5IXuxZX0uY8B8_ZSTbx5.webp",
+          "url": "https://nordhealth.design/components/input/"
+        },
+        {
+          "app": "ONS Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/tnt-lAwaYyFnfUMYFjpuT2nbipFuDVlTaDYjB8arn88_1hUen7.webp",
+          "url": "https://ons-design-system.netlify.app/components/input/"
+        },
+        {
+          "app": "Purple3",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/wsuDQGuJQoMWTkb8fumYI5aCB7on-3ZJbg813vH7b7c_Z1QoTvs.webp",
+          "url": "https://design.herokai.com/purple3/docs/#inputs"
+        },
+        {
+          "app": "Quasar Framework",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/PI2nj0bvSXiwnIxUan5UNsFofPzRKnz1WNT6p779fmI_Z2dA81s.webp",
+          "url": "https://quasar.dev/vue-components/input"
+        },
+        {
+          "app": "Ruter Components",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/pJB1eK8OmDTt_WWIa-Zm_oOp5KZUid8xpfg7ypURPb0_Z1GkQrV.webp",
+          "url": "https://components.ruter.as/#/Components/Forms/Input"
+        },
+        {
+          "app": "Seeds",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/UXZCt6wJzOSyL-yycFllgCrj2_ucBOCmfhf7CeZeYVs_27hV11.webp",
+          "url": "https://sproutsocial.com/seeds/components/input"
+        },
+        {
+          "app": "Shoelace",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/LI7NhrAFhuQcXl9ioChZ2eMKCUwqomkxd9RAFxCQDe0_MMkal.webp",
+          "url": "https://shoelace.style/components/input"
+        },
+        {
+          "app": "Stacks",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/ZAFzltlNnQ-seJst7P09PqZYiDQ0ZQdx9LjAH_yDieI_2h6pH8.webp",
+          "url": "https://stackoverflow.design/product/components/inputs"
+        },
+        {
+          "app": "uStyle",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/wcTO40APuKIOi8-B9KlS8wC_ICz0fq0rutqSjLGsAHw_1eFwFW.webp",
+          "url": "https://ustyle.guide/pattern-library/forms.html#inputs"
+        },
+        {
+          "app": "Visa Product Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/RCKo6coCyEKCfujIsSji1F2e6JDPxINzR0_8YJKol3Y_23zFPE.webp",
+          "url": "https://design.visa.com/components/input/"
+        },
+        {
+          "app": "Web Awesome",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/oXzLLvTVEdErsoD9YSIzrGs3ykLpkqmtetz_NdCMy3M_Z2bzDmg.webp",
+          "url": "https://webawesome.com/docs/components/input/"
+        }
+      ]
+    },
+    {
+      "name": "component.gallery — gọi là “Text input” (17)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Backpack",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/eaCymZ4jj9QOU7ImzZbi-Z-vf7-x0g9-ccSM1nR8mGM_Z1K1nSL.webp",
+          "url": "https://www.skyscanner.design/latest/components/text-input/web-nRg9O75F"
+        },
+        {
+          "app": "Carbon Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/yvvpUhH8e1WN6E1R1tMkPv_FVHYhmfPcMxo8rCZIPkQ_xFJP3.webp",
+          "url": "https://carbondesignsystem.com/components/text-input/usage/"
+        },
+        {
+          "app": "Decathlon Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/PImBDxE0BuoGUvKk4FoebfvU1nUAUarAte09Mu-dZPk_ZMrcR3.webp",
+          "url": "https://www.decathlon.design/726f8c765/p/31121d-text-input/b/18ceeb"
+        },
+        {
+          "app": "Forma 36",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/qLpRjgabZ1ogL_o6D2z1pXH58goAGHNodl1wBvNcOCI_1Ep7WY.webp",
+          "url": "https://f36.contentful.com/components/text-input"
+        },
+        {
+          "app": "giffgaff design system",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/IT9mVz0KjldZA3LpZmJkD7ERkAhGwR5_xE10W7fNXvM_18H1I6.webp",
+          "url": "https://www.giffgaff.design/components/for-web/form-inputs/text-input/"
+        },
+        {
+          "app": "GOLD Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/PDlOdWXgmZ4Uc8FMBsu0j3nD4REqkBzIhN0uNy_x7FI_Z24hBDj.webp",
+          "url": "https://gold.designsystemau.org/components/text-inputs/"
+        },
+        {
+          "app": "GOV.UK Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/IvocasKLclGg60-OnAWdZnigvp5_xRhhDd0hSAZSwDo_Z1Cv9FQ.webp",
+          "url": "https://design-system.service.gov.uk/components/text-input/"
+        },
+        {
+          "app": "Helios",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/qUi2BRQ_RwzylWyILWbH53Z3AKkELva40pdyPyDSJ2I_ZfozzV.webp",
+          "url": "https://helios.hashicorp.design/components/form/text-input"
+        },
+        {
+          "app": "NHS Digital service manual",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/_bd3wf_Zx-1WKmAJsqQY8ygkPYhShdlh4EkszqWiDD4_Z2av3Qj.webp",
+          "url": "https://service-manual.nhs.uk/design-system/components/text-input"
+        },
+        {
+          "app": "Nucleus Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/Z-hg3XlBZGUx4tlDBT1cO-bX8VQKXWK-3L5cV6NtTfQ_GQnkJ.webp",
+          "url": "https://britishgas.design/docs/components/ns-inputter#text-input"
+        },
+        {
+          "app": "Ontario Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/T_TcUvtpRrHRaP7uexUJicKXNlQ3QLMO1AmzJMnPhXQ_Z2qC9qE.webp",
+          "url": "https://designsystem.ontario.ca/components/detail/text-inputs.html"
+        },
+        {
+          "app": "Pajamas",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/dtKMzSl7LbqQ_RBdh5EWcUC5VGQl0R-xcyyIuzstWGw_Z22GiTD.webp",
+          "url": "https://design.gitlab.com/components/text-input"
+        },
+        {
+          "app": "PatternFly",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/ZfVJUz6dHHEvgFexM-lcNtvUd6MLNfmxolJqIcGzbSk_Z48CLa.webp",
+          "url": "https://www.patternfly.org/components/forms/text-input"
+        },
+        {
+          "app": "Pharos",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/YCuIycF4Hj57DQ9_Xsm35CYO9-cHn0dALeHimEFSNfk_Z1Ekbnr.webp",
+          "url": "https://pharos.jstor.org/components/text-input"
+        },
+        {
+          "app": "Primer",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/00zQNMNME67Lltm0fECHHVRfGtIPj25Umhi47MqXfek_Z1QFacu.webp",
+          "url": "https://primer.style/design/components/text-input"
+        },
+        {
+          "app": "Sainsbury's Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/xe6GUwIbXHU5WywABvgaw9nl4VUOfNXceWqSyRb8G_A_1wTz42.webp",
+          "url": "https://design-systems.sainsburys.co.uk/components/text-input/"
+        },
+        {
+          "app": "Wise Design",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/lZj3U1RtLo5a5mCSqkT2HgYdj7S8fx_OEj3xyyrjUHw_Z16yShI.webp",
+          "url": "https://wise.design/components/text-input"
+        }
+      ]
+    },
+    {
+      "name": "component.gallery — gọi là “Text field” (6)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Atlassian Design System",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/fxF5yVILo_URliPbGi9V8yyENKV3ymX5IdTC0nNlXlk_Z2vP9WT.webp",
+          "url": "https://atlassian.design/components/textfield/examples"
+        },
+        {
+          "app": "eBay Playbook",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/v-HI3ZF3umP66BRkkm9g1xQRvnpSV2oWOtDXwesxlZo_ZCXPXw.webp",
+          "url": "https://playbook.ebay.com/design-system/components/text-field"
+        },
+        {
+          "app": "Elastic UI framework",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/tTPtjzwMrOu40qRkskx_AOUohbsZ0wm7WurouaJayRw_Z1VScrh.webp",
+          "url": "https://eui.elastic.co/docs/components/forms/text/#text-field"
+        },
+        {
+          "app": "Material Design",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/LfolM0gWWOSyqy3r2PCqyl9dAC3dKiASmmC7clYhG9s_ZWKSDN.webp",
+          "url": "https://m3.material.io/components/text-fields/overview"
+        },
+        {
+          "app": "Polaris",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/hQl83q3ay-qcaOksNVi2Bt7b3HzqMZeKScGjj0dphu4_Z2rtKk0.webp",
+          "url": "https://shopify.dev/docs/api/app-home/web-components/forms/text-field"
+        },
+        {
+          "app": "Spectrum",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/3jGmuuzXMXyOceqBdhszJ4rIKXEUibpyoA7raIqNPMU_2wMSVR.webp",
+          "url": "https://spectrum.adobe.com/page/text-field/"
+        }
+      ]
+    },
+    {
+      "name": "component.gallery — tên khác (22)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "98.css · TextBox",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/wH4j5ndznoIBnIPme1Gw6747sYcB0jnXThp9kH1eqhs_Zar1q3.webp",
+          "url": "https://jdan.github.io/98.css/#text-box"
+        },
+        {
+          "app": "Cauldron · TextField",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/B6yvSkYk-DJHWaGvXNq0ehmiHQjv6-IUcuGbu63jvOs_2ew52d.webp",
+          "url": "https://cauldron.dequelabs.com/components/TextField"
+        },
+        {
+          "app": "Coral · Input text",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/HKXHMH0VWOswJsZOyon3H1784tbYqXR9LTcdWJShBqg_zEsIv.webp",
+          "url": "https://design.talend.com/?path=/docs/form-fields-text--docs"
+        },
+        {
+          "app": "Dell Design System · Text Input",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/EG5GaynUhENkGuOlfBzXHFu57QZJ3pRZtJWcE-mSLgo_ZfbSP3.webp",
+          "url": "https://www.delldesignsystem.com/components/text-input/"
+        },
+        {
+          "app": "Evergreen · Text Input",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/OqLXVbZdJqemVL5yHs3TRh4vyjs2fMNaBvGXbIu1VOs_Z13LAN1.webp",
+          "url": "https://evergreen.segment.com/components/text-input"
+        },
+        {
+          "app": "Flowbite · Input field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/rlvqKbdugzLZJLx58bSs9wzQSjVKZQTjM_I7IdYyjAg_Zjqbnz.webp",
+          "url": "https://flowbite.com/docs/forms/input-field/"
+        },
+        {
+          "app": "Fluent UI · TextField",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/Rloz5nybDuTUeW2if5QqwevdfdQ-HiIUbrpmPj1-VKI_21ysAx.webp",
+          "url": "https://developer.microsoft.com/en-us/fluentui#/controls/web/textfield"
+        },
+        {
+          "app": "Gestalt · TextField",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/8i2z5-_5sD-VEVD7knUAymkQ7OfjAv3LqKd_HNjA80A_Z1NeMuD.webp",
+          "url": "https://gestalt.pinterest.systems/web/textfield"
+        },
+        {
+          "app": "Grommet · TextInput",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/DbY4eiJyJK5cz9d1079R-fkofB7nUC4IQn6n7txljKg_jFhMU.webp",
+          "url": "https://v2.grommet.io/textinput"
+        },
+        {
+          "app": "Instructure-UI · TextInput",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/8oYVB21mbNa1BtoZC7-vovG-BByML_9h3bw0zrrx7kI_Z1krFeM.webp",
+          "url": "https://instructure.design/#TextInput"
+        },
+        {
+          "app": "Jøkul Designsystem · TextInput",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/awTQw_9Ym5FjlXXBI2i0oP0IdKVIQlifluvzUf8zt_0_ZxvG9z.webp",
+          "url": "https://jokul.fremtind.no/komponenter/textinput"
+        },
+        {
+          "app": "Mozilla Protocol · Input: Text",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/y1L7VI6rtPFvttGcqsZEtucoLeR7GB1-4518OSxAM5o_6vM17.webp",
+          "url": "https://protocol.mozilla.org/components/detail/input--text.html"
+        },
+        {
+          "app": "NewsKit · Text Field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/qqnUjkED_cmdb7EUzE-Rf_Gl95PyR8i6kRcGVmVpx3o_K1wwU.webp",
+          "url": "https://www.newskit.co.uk/components/text-field/"
+        },
+        {
+          "app": "No Style Design System · Text box",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/uVmvSb_RTnSrKEAZ9nphdzyAzsRW32Oz-h6Fejbnz2Q_tts3n.webp",
+          "url": "https://nostyle.onrender.com/components/text-box"
+        },
+        {
+          "app": "Orbit · Input field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/3UzKx-wlxu84JkKlmLdfua_XqEGdDDzvlMO02aRrVdY_2w81Ci.webp",
+          "url": "https://orbit.kiwi/components/inputfield/"
+        },
+        {
+          "app": "Porsche Design System · Text Field Wrapper",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/heCYf8QEFxFtAlQ5r9vArRkMstU5RRUMmAMNlQfNH2Q_Z1uCikI.webp",
+          "url": "https://designsystem.porsche.com/v3/components/text-field-wrapper/examples"
+        },
+        {
+          "app": "SEB Design Library · Input field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/IXesKsmOl9X5sHEbigH167oKAxzrHt-hRM__JDZya00_fVDkX.webp",
+          "url": "https://designlibrary.sebgroup.com/components/forms/input/"
+        },
+        {
+          "app": "Seek style guide · Text Field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/pxwIAPDamN8mm-Q-i-WGAibhvSLP5S-v-EU_lNX5TpY_1fdxJ4.webp",
+          "url": "https://seek-oss.github.io/seek-style-guide/textfield"
+        },
+        {
+          "app": "SubZero · Input field",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/ylE5il38lB18hpxB2Czo-bxSBr5WrTbdoCvdzjZ-1xg_1QfC9w.webp",
+          "url": "https://www.subzero.axis.bank.in/components/input-field"
+        },
+        {
+          "app": "Wanda · Textfield",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/oTQKe63j8pd8cxTJYttJag0SbxXTuDCDt5tz-bQi0HA_1tFcFg.webp",
+          "url": "https://design.wonderflow.ai/get-started/components/inputs/textfield"
+        },
+        {
+          "app": "West Midlands Network Design System · Text Input",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/bMIPT1_L_qstfMUNZD3mASNQMxPMsRsQ0cJ-rY9Tw_w_1TOe8G.webp",
+          "url": "https://designsystem.tfwm.org.uk/components/text-input/"
+        },
+        {
+          "app": "Workday Canvas Design System · Text Input",
+          "platform": "cg",
+          "image": "https://component.gallery/_astro/Yhd6YIOZdSKvy9zOBQfGnhvgVonr4jk-JoNZ6ezMyLg_ZGBGmp.webp",
+          "url": "https://canvas.workday.com/components/inputs/text-input"
+        }
+      ]
+    }
+  ]
+}

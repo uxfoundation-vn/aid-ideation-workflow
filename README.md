@@ -1,43 +1,52 @@
-# Bước 5 — Text field từ component.gallery trên 1 trang html
+# Bước 6 — Template dùng chung + kho lưu trữ
 
 ## Prompt vừa chạy
 
-> Crawl thử component text field, show lên file html để check
+> Tạo template html, các lần crawl sau chỉ trả về data đổ vào template
 
 ## Kết quả
 
-| File | Là gì |
-|---|---|
-| `preview-text-field.html` | **Mới.** Trang html thô: danh sách tên gọi + lưới 71 ví dụ text field, mỗi ví dụ có ảnh, tên design system, link «Docs gốc» |
+| File | Thay đổi | Là gì |
+|---|---|---|
+| `templates/template.html` | Mới | Khung trang dùng chung — chỉ cần thay object `DATA` |
+| `assets/gallery.css`, `assets/gallery.js`, `assets/fonts/` | Mới | Giao diện dùng chung: card, dải flow có số bước, phóng to ảnh, link nguồn |
+| `data/login-ios.json` | Mới | Data flow login (từ bước 2) |
+| `data/text-field.json` | Mới | Data text field (từ bước 5), nhóm theo tên gọi: Input · Text input · Text field · tên khác |
+| `research/login-ios.html`, `research/text-field.html` | Mới | 2 trang = khung + data tương ứng |
+| `index.html` | Mới | Kho lưu trữ: liệt kê mọi research, chia Flow / UI Component |
+| `shots/` → `assets/shots/login-ios/` | Chuyển chỗ | 10 ảnh login của bước 2 |
+| `preview.html`, `preview-text-field.html` | **Xoá** | 2 trang thô đã được làm lại theo khung |
 
-Bot chạy `node component-gallery/crawl.mjs fetch text-input` (script của bước 4) rồi dựng trang từ dữ liệu vừa tải. Dữ liệu thô vẫn nằm trong `component-gallery/cache/`, không lên git.
+Mở `index.html` bằng browser — đây là cửa vào duy nhất từ giờ.
 
-Mở `preview-text-field.html` bằng browser. Điểm cần quan sát:
+Project giờ chia làm 3 phần, mỗi phần 1 việc:
 
-- 71 ví dụ text field từ design system thật, mỗi ví dụ có link về docs gốc
-- Cùng 1 component nhưng **14 tên gọi khác nhau**: Text field, Input, Text input, TextInput… — thứ designer hay cãi nhau khi đặt tên component
-- Ảnh vẫn nằm trên server của component.gallery (link thẳng), không tải về — đúng ràng buộc ở bước 3
+| Phần | Ở đâu | Làm gì |
+|---|---|---|
+| Khung | `templates/` + `assets/` | Giao diện dùng chung |
+| Data | `data/<tên>.json` | Riêng của từng lần crawl: tên, nguồn, danh sách ảnh + link |
+| Kho | `index.html` | Liệt kê mọi research đã lưu |
 
-Giờ mở lại `preview.html` của bước 2 và đặt cạnh trang này: **2 trang, 2 kiểu code, 2 kiểu giao diện**. Mỗi lần crawl thứ mới bot lại viết 1 trang html từ đầu → càng crawl càng lộn xộn, không có chỗ nào xem lại tất cả.
+Điểm cần quan sát:
+
+- 2 trang giờ cùng 1 giao diện, dù 1 trang là flow (có thứ tự bước), 1 trang là component (lưới ảnh)
+- Lần crawl sau bot **không viết html nữa** — chỉ trả data, đổ vào khung, thêm 1 dòng vào kho
+- Muốn đổi giao diện cả kho chỉ cần sửa 1 chỗ trong `assets/`
 
 ---
 
-## Prompt 6 — Tạo template html
+## Prompt 7 — Viết 2 skill
 
 Gõ tiếp:
 
-> Tạo template html, các lần crawl sau chỉ trả về data đổ vào template
+> Viết 2 skill tách biệt để crawl comp và flow
 
-**Cần thấy:**
-
-- 1 file template dùng chung + 1 chỗ để data riêng của từng lần crawl
-- 2 trang thô ở bước 2 và bước 5 được làm lại theo template, cùng 1 giao diện
-- 1 trang index liệt kê mọi lần research đã lưu, bấm vào để mở lại
+**Cần thấy:** 2 skill trong `.claude/skills/` — 1 cho component, 1 cho flow — ghi lại đúng các bước đã làm từ đầu tới giờ để lần sau chỉ cần nói "research component X" hoặc "tìm flow Y" là bot tự làm đủ, ra đúng khung, tự thêm vào kho.
 
 ---
 
 ## Xem đáp án + đề bài tiếp theo
 
 ```
-git restore . && git clean -fd && git checkout step6
+git restore . && git clean -fd && git checkout step7
 ```

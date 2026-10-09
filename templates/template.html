@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>__PAGE_TITLE__</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../assets/gallery.css" />
+</head>
+<body>
+<header>
+  <a class="back-link" href="../index.html"><svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>Kho lưu trữ</a>
+  <h1 id="page-title"></h1>
+  <p id="page-subtitle"></p>
+</header>
+<main id="app"></main>
+
+<script src="../assets/gallery.js"></script>
+<script>
+/**
+ * SCHEMA — chỉ cần thay object DATA này cho mỗi lần research mới.
+ * CSS/JS dùng chung nằm ở assets/gallery.css và assets/gallery.js — không sửa ở đây.
+ *
+ * DATA = {
+ *   title: string,          // vd: "UI Pattern Refs: Empty State"
+ *   subtitle: string,       // vd: "Nguồn: Mobbin search_screens — research trước khi thiết kế."
+ *   sections: [
+ *     {
+ *       name: string,          // vd: "Empty State — iOS", hoặc "Afterpay — Logging In (6 bước)" cho flow
+ *       layout?: "grid" | "flow", // "flow" = dải ngang có thứ tự (dùng với item.step), mặc định "grid"
+ *       items: [
+ *         {
+ *           app: string,           // tên app / tên design system (platform "cg")
+ *           platform: "ios" | "web" | "cg",
+ *           image: string,         // ảnh local "../assets/shots/<slug>/…" (Mobbin) / screenshot URL (component.gallery)
+ *           url: string,           // mobbin_url / docs gốc design system / pin URL
+ *           step?: number,         // thứ tự bước trong flow — thay cho badge platform
+ *           alt?: string           // optional, mặc định dùng `app`
+ *         }
+ *       ]
+ *     }
+ *   ]
+ * }
+ */
+const DATA = {
+  title: "__PAGE_TITLE__",
+  subtitle: "__PAGE_SUBTITLE__",
+  sections: []
+};
+
+MobbinGallery.render(DATA);
+</script>
+</body>
+</html>
