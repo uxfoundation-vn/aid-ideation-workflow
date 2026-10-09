@@ -5,6 +5,16 @@
  * DATA = {
  *   title: string,
  *   subtitle: string,
+ *   report?: {                 // component-research: block tổng hợp 4 câu hỏi designer,
+ *     tldr: string,            //   render TRÊN các section ảnh (schema chi tiết xem
+ *                              //   .claude/skills/component-research/SKILL.md)
+ *     purpose?: { items: [{ text, src? }] },
+ *     differences?: { note?, rows: [{ name, use, src? }] },
+ *     states?: { note?, rows: [{ name, desc, src? }] },
+ *     naming?: { headline?, bars: [{ name, count }], camps?: [{ name, ds }], advice? },
+ *     bestPractices?: [{ group, items: [{ text, src? }] }],
+ *     note?: string
+ *   },
  *   sections: [
  *     {
  *       name: string,               // section heading, e.g. "Afterpay — Logging In (6 bước)"
@@ -21,6 +31,7 @@
  *       ]
  *     }
  *   ],
+ *   sources?: [{ label, url, note? }]  // footer "Nguồn & phương pháp"
  * }
  */
 (function () {
@@ -79,6 +90,68 @@
     `;
   }
 
+  /* ---------- component report (DATA.report + DATA.sources) ---------- */
+
+  const srcChip = (src) => (src ? ` <span class="src">${escapeHtml(src)}</span>` : "");
+  const noteHtml = (note) => (note ? `<div class="report-note">${escapeHtml(note)}</div>` : "");
+
+  function qBlock(q, title, body) {
+    return `<h2><span class="q">${q}</span> ${escapeHtml(title)}</h2>${body}`;
+  }
+
+  function bullets(items, intro) {
+    return (intro ? `<p>${escapeHtml(intro)}</p>` : "") +
+      `<ul>${items.map((i) => `<li>${escapeHtml(i.text)}${srcChip(i.src)}</li>`).join("")}</ul>`;
+  }
+
+  function reportHtml(report) {
+    if (!report) return "";
+    let h = `<div class="report">`;
+    if (report.tldr) h += `<p class="report-tldr">${report.tldr}</p>`; // tldr do skill tự viết, cho phép <b>/<code>
+    if (report.purpose) h += qBlock("1", "Dùng để làm gì?", bullets(report.purpose.items, report.purpose.intro));
+    if (report.differences) {
+      const rows = report.differences.rows
+        .map((r) => `<tr><td><b>${escapeHtml(r.name)}</b></td><td>${escapeHtml(r.use)}${srcChip(r.src)}</td></tr>`)
+        .join("");
+      h += qBlock("2", "Khác gì so với component liên quan?",
+        `<table><tr><th>Component</th><th>Dùng khi…</th></tr>${rows}</table>` + noteHtml(report.differences.note));
+    }
+    if (report.states) {
+      const rows = report.states.rows
+        .map((r) => `<tr><td><b>${escapeHtml(r.name)}</b></td><td>${escapeHtml(r.desc)}${srcChip(r.src)}</td></tr>`)
+        .join("");
+      h += qBlock("3", "Có các state gì?",
+        `<table><tr><th>State</th><th>Mô tả</th></tr>${rows}</table>` + noteHtml(report.states.note));
+    }
+    if (report.naming) {
+      const max = Math.max(...report.naming.bars.map((b) => b.count), 1);
+      const bars = report.naming.bars
+        .map((b) => `<div class="dist-bar"><span class="dist-name">${escapeHtml(b.name)}</span><div class="dist-track"><div class="dist-fill" style="width:${Math.round((b.count / max) * 100)}%"></div></div><span class="dist-n">${b.count}</span></div>`)
+        .join("");
+      const camps = report.naming.camps
+        ? `<div class="camp">${report.naming.camps.map((c) => `<div class="camp-card"><b>${escapeHtml(c.name)}</b><div class="ds">${escapeHtml(c.ds)}</div></div>`).join("")}</div>`
+        : "";
+      const advice = report.naming.advice ? `<p><b>Gợi ý:</b> ${escapeHtml(report.naming.advice)}</p>` : "";
+      h += qBlock("4", "Đặt tên như nào?",
+        (report.naming.headline ? `<p>${escapeHtml(report.naming.headline)}</p>` : "") + bars + camps + advice);
+    }
+    if (report.bestPractices) {
+      h += qBlock("+", "Best practice khi dùng",
+        report.bestPractices.map((g) =>
+          `<div class="group-label">${escapeHtml(g.group)}</div>` + bullets(g.items)
+        ).join(""));
+    }
+    h += noteHtml(report.note);
+    return h + `</div>`;
+  }
+
+  function sourcesHtml(sources) {
+    if (!sources || !sources.length) return "";
+    return `<div class="sources"><b>Nguồn & phương pháp</b><ul>${sources
+      .map((s) => `<li><a href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.label)}</a>${s.note ? ` — ${escapeHtml(s.note)}` : ""}</li>`)
+      .join("")}</ul></div>`;
+  }
+
   function render(data) {
     document.title = data.title || "Mobbin UI Pattern Refs";
     const titleEl = document.getElementById("page-title");
@@ -86,7 +159,8 @@
     if (titleEl) titleEl.textContent = data.title || "";
     if (subtitleEl) subtitleEl.textContent = data.subtitle || "";
     const app = document.getElementById("app");
-    if (!data.sections || data.sections.length === 0) {
+    const hasReport = !!data.report;
+    if ((!data.sections || data.sections.length === 0) && !hasReport) {
       app.innerHTML = '<p class="empty">Chưa có data. Đổ dữ liệu vào object DATA ở trên.</p>';
       return;
     }
@@ -96,7 +170,7 @@
     }
     const counter = { i: 0 };
     const sectionsHtml = (data.sections || []).map((s) => sectionHtml(s, counter)).join("");
-    app.innerHTML = sectionsHtml;
+    app.innerHTML = reportHtml(data.report) + sectionsHtml + sourcesHtml(data.sources);
   }
 
   let lightboxEl = null;

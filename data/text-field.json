@@ -4,6 +4,171 @@
   "category": "component",
   "title": "UI Refs: Text Field",
   "subtitle": "Nguồn: The Component Gallery (component.gallery/components/text-input) — 71 ví dụ từ design system thật, nhóm theo tên gọi. Ảnh dẫn link thẳng từ site gốc. Bấm link để mở docs gốc của design system.",
+  "report": {
+    "tldr": "<b>Text field</b> là ô nhập 1 dòng chữ tự do — component cơ bản nhất của mọi form. Điểm hay sai nhất: <b>dùng placeholder thay cho label</b>. Tên gọi chia 3 phe gần ngang nhau: <code>Input</code>, <code>Text input</code>, <code>Text field</code>.",
+    "purpose": {
+      "items": [
+        {
+          "text": "Nhập 1 dòng chữ tự do: trong form, ô tìm kiếm, ô cập nhật trạng thái, ô nhập ngày",
+          "src": "Balsamiq"
+        },
+        {
+          "text": "Các biến thể hay gặp: ô email, ô tìm kiếm có icon kính lúp, ô autocomplete có nút xoá nhanh",
+          "src": "UI Playbook"
+        },
+        {
+          "text": "2 kiểu viền chính: viền 4 cạnh (border) và chỉ gạch chân (underline)",
+          "src": "Balsamiq"
+        }
+      ]
+    },
+    "differences": {
+      "rows": [
+        {
+          "name": "Text area",
+          "use": "nội dung dài nhiều dòng — bài đăng, đánh giá",
+          "src": "Balsamiq"
+        },
+        {
+          "name": "Search box",
+          "use": "tìm nội dung trên trang",
+          "src": "Balsamiq"
+        },
+        {
+          "name": "Date input / Date picker",
+          "use": "ngày xa (ngày sinh, hết hạn) gõ tay; ngày gần nên kèm lịch chọn",
+          "src": "Balsamiq"
+        }
+      ],
+      "note": "Select / Combobox: cả 2 bài không so sánh — cần nguồn khác"
+    },
+    "states": {
+      "rows": [
+        {
+          "name": "Default",
+          "desc": "chưa tương tác (Balsamiq gọi là Normal)",
+          "src": "Balsamiq"
+        },
+        {
+          "name": "Hover",
+          "desc": "rê chuột vào — báo hiệu ô bấm được",
+          "src": "UI Playbook"
+        },
+        {
+          "name": "Focus",
+          "desc": "đang được chọn bằng chuột/Tab hoặc đang gõ; không xoá viền focus nếu chưa có kiểu thay thế",
+          "src": "Balsamiq · UI Playbook"
+        },
+        {
+          "name": "Active",
+          "desc": "đang được kích hoạt",
+          "src": "UI Playbook"
+        },
+        {
+          "name": "Error",
+          "desc": "dữ liệu sai: đổi màu + câu báo lỗi + icon, không chỉ dựa vào màu",
+          "src": "Balsamiq · UI Playbook"
+        },
+        {
+          "name": "Disabled",
+          "desc": "không cho nhập, thường vì phải chọn mục khác trước; có thể kèm tooltip giải thích",
+          "src": "Balsamiq · UI Playbook"
+        },
+        {
+          "name": "Read-only",
+          "desc": "không sửa được nhưng vẫn Tab tới, bôi đen và copy được — khác Disabled",
+          "src": "UI Playbook"
+        }
+      ],
+      "note": "Gộp và chuẩn hoá tên state từ 2 nguồn: Balsamiq nêu 3, UI Playbook nêu 6"
+    },
+    "naming": {
+      "headline": "72 design system gọi component này bằng 14 cách viết — gộp biến thể viết hoa/liền (TextInput, TextField…) còn 3 phe chính",
+      "bars": [
+        {
+          "name": "Input",
+          "count": 26
+        },
+        {
+          "name": "Text input",
+          "count": 25
+        },
+        {
+          "name": "Text field",
+          "count": 12
+        },
+        {
+          "name": "Input field",
+          "count": 4
+        },
+        {
+          "name": "Text box",
+          "count": 2
+        },
+        {
+          "name": "Còn lại",
+          "count": 3
+        }
+      ],
+      "camps": [
+        {
+          "name": "“Input”",
+          "ds": "Ant Design · Chakra UI · Shoelace · Lightning · Nord"
+        },
+        {
+          "name": "“Text input”",
+          "ds": "Carbon · GOV.UK · Primer · USWDS · NHS"
+        },
+        {
+          "name": "“Text field”",
+          "ds": "Material · Polaris · Atlassian · Spectrum · Fluent UI"
+        }
+      ],
+      "advice": "Làm app/sản phẩm thì “Text field” khớp Material, Polaris, Fluent — dev quen; làm hệ thống dịch vụ công thì “Text input” theo GOV.UK, USWDS. “Input” ngắn nhưng dễ lẫn với các loại input khác (checkbox, select)."
+    },
+    "bestPractices": [
+      {
+        "group": "Label & placeholder",
+        "items": [
+          {
+            "text": "Luôn có label nằm trên ô; placeholder không thay được label vì biến mất khi gõ và trình đọc màn hình không đọc",
+            "src": "Balsamiq · UI Playbook"
+          },
+          {
+            "text": "Placeholder nên là ví dụ đúng định dạng (joe.doe@gmail.com) thay vì nhắc lại label",
+            "src": "UI Playbook"
+          },
+          {
+            "text": "Hướng dẫn định dạng đặt ở hint dưới ô, không nhét vào placeholder",
+            "src": "Balsamiq"
+          }
+        ]
+      },
+      {
+        "group": "Lỗi & bắt buộc",
+        "items": [
+          {
+            "text": "Báo lỗi đúng lúc: dữ liệu phức tạp (mật khẩu mới) kiểm tra khi đang gõ, dữ liệu đơn giản (email) đợi gõ xong",
+            "src": "UI Playbook"
+          },
+          {
+            "text": "Đánh dấu trường bắt buộc bằng dấu *; nếu gần hết là bắt buộc thì đánh dấu trường tuỳ chọn thay vào",
+            "src": "UI Playbook"
+          }
+        ]
+      },
+      {
+        "group": "Kích thước",
+        "items": [
+          {
+            "text": "Độ rộng ô gợi ý độ dài nội dung cần nhập; có giới hạn ký tự thì hiện bộ đếm",
+            "src": "Balsamiq"
+          }
+        ]
+      }
+    ],
+    "note": "Bỏ qua link Uiverse.io trong phần resources của component.gallery — thư viện code, không phải hướng dẫn UX."
+  },
   "sections": [
     {
       "name": "component.gallery — gọi là “Input” (26)",
@@ -454,6 +619,23 @@
           "url": "https://canvas.workday.com/components/inputs/text-input"
         }
       ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "component.gallery — Text input",
+      "url": "https://component.gallery/components/text-input/",
+      "note": "72 ví dụ, 14 cách đặt tên"
+    },
+    {
+      "label": "Balsamiq — Text Input Guidelines",
+      "url": "https://balsamiq.com/learn/ui-control-guidelines/text-input/",
+      "note": "tóm tắt bằng máy từ bài gốc (Tess Gadd)"
+    },
+    {
+      "label": "UI Playbook — TextField",
+      "url": "https://uiplaybook.dev/play/textfield",
+      "note": "tóm tắt bằng máy từ bài gốc"
     }
   ]
 }

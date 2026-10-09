@@ -23,6 +23,9 @@
  * DATA = {
  *   title: string,          // vd: "UI Pattern Refs: Empty State"
  *   subtitle: string,       // vd: "Nguồn: Mobbin search_screens — research trước khi thiết kế."
+ *   report?: object,        // CHỈ component-research: block tổng hợp 4 câu hỏi designer,
+ *                           //   render trên cùng. Schema chi tiết xem
+ *                           //   .claude/skills/component-research/SKILL.md
  *   sections: [
  *     {
  *       name: string,          // vd: "Empty State — iOS", hoặc "Afterpay — Logging In (6 bước)" cho flow
@@ -38,7 +41,8 @@
  *         }
  *       ]
  *     }
- *   ]
+ *   ],
+ *   sources?: [{ label, url, note? }]   // footer "Nguồn & phương pháp" (component-research)
  * }
  */
 const DATA = {
