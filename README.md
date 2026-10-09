@@ -1,47 +1,44 @@
-# Bước 2 — Flow login của 2 app iOS trên 1 trang html
+# Bước 3 — component.gallery: crawl được không?
 
 ## Prompt vừa chạy
-
-**Prompt 1**
-
-> Test MCP Mobbin xem chạy chưa
-
-**Prompt 2**
-
-> Crawl thử flow login của 2 app iOS, show lên 1 file html để check
-
-## Kết quả
-
-**Sau Prompt 1** — không có file nào. Bot gọi công cụ tìm kiếm của Mobbin và in ra kết quả thô (JSON): tên app, tên flow, link flow trên Mobbin, link ảnh từng màn hình. Thấy được là MCP đã chạy.
-
-**Sau Prompt 2** — thêm 2 thứ:
-
-| File | Là gì |
-|---|---|
-| `preview.html` | Trang html thô: 2 app, mỗi app 1 hàng ảnh theo thứ tự bước, kèm link «Xem flow trên Mobbin» |
-| `shots/grubhub/01–06.jpg` | 6 màn hình login của Grubhub |
-| `shots/dicks/01–04.jpg` | 4 màn hình login của DICK'S Sporting Goods |
-
-Mở `preview.html` bằng browser. Điểm cần quan sát:
-
-- Cùng một mục tiêu (login) nhưng mỗi app một cách giải: Grubhub 6 bước, DICK'S 4 bước, một app nhúng cả webview vào app native
-- Thứ tự màn hình chính là hành trình người dùng — vì thế ảnh phải giữ đúng thứ tự bước
-
----
-
-## Prompt 3 — Nguồn thứ 2: component.gallery
-
-Dán link này vào Claude kèm câu hỏi:
 
 > Check link này xem có crawl được không, test thử. Có hạn chế gì không?
 > https://component.gallery/components/text-input
 
-**Cần thấy:** bot tự tải thử trang, đọc điều khoản của site, rồi trả lời được 2 ý: crawl được không về kỹ thuật, và được phép dùng tới đâu.
+## Kết quả
+
+**Không có file mới** — so với bước 2, chỉ README này thay đổi. Kết quả là câu trả lời của bot sau khi tự tải thử trang và đọc robots.txt, điều khoản của site:
+
+### Crawl được, và dễ
+
+- Site là trang tĩnh, dữ liệu của mỗi component nằm sẵn trong HTML (tên, design system, tech, tính năng, link docs, ảnh) → chỉ cần tải trang về rồi bóc chữ, không cần mở trình duyệt giả lập, không cần đăng nhập
+- 1 trang danh sách ~60 component, mỗi component 1 trang riêng với vài chục ví dụ từ design system thật (Material, Carbon, GOV.UK, Polaris…)
+- Ảnh screenshot mở thẳng được bằng link, không bị chặn
+
+### Hạn chế — phần quan trọng hơn
+
+- **Site chặn bot AI có tên** (robots.txt chặn ClaudeBot → test thật trả 403). Tải bằng tên trình duyệt trung thực thì được. Không giả mạo, không lách
+- **Site ghi rõ mục đích cho phép: tham khảo (`use=reference`), cấm dùng để train AI**
+- **Repo gốc không có LICENSE** → dữ liệu không mở. Chỉ dùng nội bộ để research: luôn ghi nguồn + link về trang gốc, **không tải ảnh về lưu lại**, không đăng lại nội dung, không đưa dữ liệu crawl vào repo public
+- Bài viết sâu (hướng dẫn dùng, best practice) chỉ có ở ~12/60 component; phần còn lại chủ yếu là danh sách ví dụ + link tài liệu ngoài
+- Lịch sự với site: chờ ~1,5 giây giữa mỗi lần tải, lưu lại kết quả để không tải lặp
+
+Điểm cần quan sát: bot không chỉ trả lời "được/không" mà phải tự test, đọc robots.txt và điều khoản — **crawl được về kỹ thuật chưa chắc là được phép dùng**.
+
+---
+
+## Prompt 4 — Viết hàm để crawl
+
+Gõ tiếp:
+
+> Viết hàm để crawl
+
+**Cần thấy:** xuất hiện 1 file script trong folder `component-gallery/`, chạy được 2 việc: lấy danh sách component, và tải chi tiết 1 component về máy.
 
 ---
 
 ## Xem đáp án + đề bài tiếp theo
 
 ```
-git restore . && git clean -fd && git checkout step3
+git restore . && git clean -fd && git checkout step4
 ```
