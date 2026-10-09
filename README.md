@@ -1,44 +1,48 @@
-# Bước 3 — component.gallery: crawl được không?
+# Bước 4 — Hàm crawl component.gallery
 
 ## Prompt vừa chạy
 
-> Check link này xem có crawl được không, test thử. Có hạn chế gì không?
-> https://component.gallery/components/text-input
+> Viết hàm để crawl
 
 ## Kết quả
 
-**Không có file mới** — so với bước 2, chỉ README này thay đổi. Kết quả là câu trả lời của bot sau khi tự tải thử trang và đọc robots.txt, điều khoản của site:
+| File | Là gì |
+|---|---|
+| `component-gallery/crawl.mjs` | **Mới.** Script crawl component.gallery, làm đúng 2 việc: `list` và `fetch` |
 
-### Crawl được, và dễ
+Cách chạy và kết quả khi chạy thử:
 
-- Site là trang tĩnh, dữ liệu của mỗi component nằm sẵn trong HTML (tên, design system, tech, tính năng, link docs, ảnh) → chỉ cần tải trang về rồi bóc chữ, không cần mở trình duyệt giả lập, không cần đăng nhập
-- 1 trang danh sách ~60 component, mỗi component 1 trang riêng với vài chục ví dụ từ design system thật (Material, Carbon, GOV.UK, Polaris…)
-- Ảnh screenshot mở thẳng được bằng link, không bị chặn
+```
+node component-gallery/crawl.mjs list              # lấy danh sách ~60 component
+node component-gallery/crawl.mjs fetch text-input  # tải chi tiết 1 component
+```
 
-### Hạn chế — phần quan trọng hơn
+```
+ok  text-input  — 72 examples, 0 aliases, 14 tên khác nhau, prose: resources
+```
 
-- **Site chặn bot AI có tên** (robots.txt chặn ClaudeBot → test thật trả 403). Tải bằng tên trình duyệt trung thực thì được. Không giả mạo, không lách
-- **Site ghi rõ mục đích cho phép: tham khảo (`use=reference`), cấm dùng để train AI**
-- **Repo gốc không có LICENSE** → dữ liệu không mở. Chỉ dùng nội bộ để research: luôn ghi nguồn + link về trang gốc, **không tải ảnh về lưu lại**, không đăng lại nội dung, không đưa dữ liệu crawl vào repo public
-- Bài viết sâu (hướng dẫn dùng, best practice) chỉ có ở ~12/60 component; phần còn lại chủ yếu là danh sách ví dụ + link tài liệu ngoài
-- Lịch sự với site: chờ ~1,5 giây giữa mỗi lần tải, lưu lại kết quả để không tải lặp
+Dữ liệu tải về nằm trong `component-gallery/cache/` — folder này **không đưa lên git** (đã có trong `.gitignore`), vì dữ liệu của site không có LICENSE (xem lại bước 3). Ai cần thì tự chạy script để có bản của mình.
 
-Điểm cần quan sát: bot không chỉ trả lời "được/không" mà phải tự test, đọc robots.txt và điều khoản — **crawl được về kỹ thuật chưa chắc là được phép dùng**.
+Điểm cần quan sát:
+
+- Các ràng buộc ở bước 3 nằm ngay đầu file script: tên trình duyệt trung thực, chờ 1,5 giây giữa mỗi lần tải, tải rồi thì không tải lại
+- Chạy `fetch` lần 2 sẽ thấy `skip (cached)` — script dùng lại bản đã tải, không làm phiền site
+- Không cần cài thêm gì: chỉ cần Node 18 trở lên
 
 ---
 
-## Prompt 4 — Viết hàm để crawl
+## Prompt 5 — Crawl thử component text field, show lên html
 
 Gõ tiếp:
 
-> Viết hàm để crawl
+> Crawl thử component text field, show lên file html để check
 
-**Cần thấy:** xuất hiện 1 file script trong folder `component-gallery/`, chạy được 2 việc: lấy danh sách component, và tải chi tiết 1 component về máy.
+**Cần thấy:** 1 file html mở bằng browser được, có các ví dụ text field từ nhiều design system khác nhau, mỗi ví dụ có ảnh + tên design system + link về docs gốc.
 
 ---
 
 ## Xem đáp án + đề bài tiếp theo
 
 ```
-git restore . && git clean -fd && git checkout step4
+git restore . && git clean -fd && git checkout step5
 ```
