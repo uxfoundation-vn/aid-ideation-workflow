@@ -335,6 +335,33 @@ main#app .section .section-title::before {
 .sources a { color: var(--accent); text-decoration: none; }
 .sources a:hover { text-decoration: underline; }
 
+/* flow review (DATA.review) — ref chip: thumbnail + bấm mở lightbox */
+.report ol { padding-left: 22px; margin: 8px 0; }
+.report ol > li { margin: 10px 0; font-size: 14.5px; }
+.report ol > li::marker { color: var(--accent); font-weight: 600; }
+.report .tradeoff { color: var(--text-muted); font-size: 13px; margin: 6px 0 0; }
+.refs { display: inline-flex; flex-wrap: wrap; gap: 6px; vertical-align: 3px; margin-left: 6px; }
+.report td .refs { vertical-align: top; margin-left: 0; }
+.ref {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+  color: var(--text); background: var(--card-bg);
+  border: 1px solid var(--border); border-radius: 2px;
+  padding: 3px 8px 3px 3px; cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.ref:hover { border-color: var(--border-strong); background: var(--report-chip-bg); }
+.ref img {
+  width: 44px; height: 33px; object-fit: cover; object-position: top;
+  background: #f4f4f2; display: block; border-radius: 1px;
+}
+.ref.missing { color: #cf222e; cursor: default; }
+.ext-link {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  text-decoration: none; border-bottom: 1px dotted currentColor; white-space: nowrap;
+}
+.ext-link:hover { border-bottom-style: solid; }
+
 .lightbox {
   position: fixed;
   inset: 0;

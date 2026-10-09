@@ -398,7 +398,610 @@ const DATA = {
         }
       ]
     }
-  ]
+  ],
+  review:   {
+    "tldr": "9 flow của 7 app cho thấy map-search chia 3 trường phái: <b>browse-first</b> (Places, corner — pin là nội dung, không cần gõ), <b>search-first có nhiệm vụ</b> (Tock, Chick-fil-A, Klook — form + điều kiện, map phụ trợ), và <b>map như sổ tay quanh điểm neo</b> (Airbnb, PamPam — tìm để thêm tham chiếu quanh chỗ ở/lịch trình). Đáng học nhất: pin đa ngữ nghĩa (ảnh/emoji/số/màu trạng thái), re-search theo pan có feedback tường minh, và cách Chick-fil-A báo «địa điểm không dùng được» 2 lớp trước–sau khi tap. Cần tránh: label pin dày đặc đè map, overlay search trống trơn, và copy lỗi lặp ở bước chốt đặt bàn.",
+    "goal": {
+      "intro": "Goal chung: người dùng tìm địa điểm (quán ăn, cafe, điểm tham quan, nhà hàng thuộc hệ thống) theo không gian — «gần đâu đó», «quanh chỗ này» — thay vì theo từ khoá thuần. Khác search dạng list: map vừa là input (pan/zoom = câu hỏi), vừa là output (kết quả nằm đúng vị trí địa lý).",
+      "rows": [
+        {
+          "flow": "Places — Searching Places",
+          "entry": "Tab Search, query trống → thấy gợi ý travel query",
+          "exit": "Card chi tiết địa điểm (dark card, carousel ngang)",
+          "note": "Gợi ý trước khi gõ; autocomplete tách 2 nhóm intent"
+        },
+        {
+          "flow": "Places — Map",
+          "entry": "Tab Map, thấy đầy pin ảnh",
+          "exit": "Card chi tiết gắn pin được chọn",
+          "note": "Browse không cần gõ; pin ảnh = nội dung"
+        },
+        {
+          "flow": "Tock — Searching (via map)",
+          "entry": "Bottom sheet ~45%: ô query + ô location, filter chips",
+          "exit": "Detail sheet nhà hàng có nút đặt bàn",
+          "note": "Mọi kết quả gắn điều kiện: ngày, giờ, số khách"
+        },
+        {
+          "flow": "corner — Searching for places in an area",
+          "entry": "Mở app, map trống → tự search theo vùng đang xem",
+          "exit": "Feed card địa điểm với social proof",
+          "note": "Pan = query; không có ô search truyền thống"
+        },
+        {
+          "flow": "Chick-fil-A — Searching a restaurant",
+          "entry": "Sheet «Select a restaurant» (list gần tôi + map)",
+          "exit": "Chọn được nhà hàng có hỗ trợ app",
+          "note": "Bài toán hẹp: chỉ nhà trong network, phân biệt rõ có/không hỗ trợ"
+        },
+        {
+          "flow": "Airbnb — Searching map",
+          "entry": "Trang «Where you'll be» (map neo quanh chỗ ở)",
+          "exit": "Điểm tham chiếu + đường di chuyển + thời gian",
+          "note": "Tìm để thêm vào map tham khảo, không phải lọc kết quả"
+        },
+        {
+          "flow": "PamPam — Place detail",
+          "entry": "Panel itinerary Day 1 (stops đánh số)",
+          "exit": "Detail stop: ảnh, address, rating emoji",
+          "note": "Map chỉ hiện stops của mình, không có POI nền"
+        },
+        {
+          "flow": "PamPam — Searching map",
+          "entry": "Edit mode, mục «late night snacking spots»",
+          "exit": "Spot mới thêm vào section",
+          "note": "Search phục vụ soạn itinerary + công cụ vẽ tay"
+        },
+        {
+          "flow": "Klook — View map",
+          "entry": "City page → tile map nhỏ trong hero",
+          "exit": "Modal map + list ranked vé; popup giá trên map",
+          "note": "Map là phụ trợ commerce; đánh số khớp list ↔ map"
+        }
+      ]
+    },
+    "camps": {
+      "items": [
+        {
+          "name": "Map-first, browse để khám phá",
+          "apps": "Places · corner",
+          "desc": "Pin là nội dung thật: ảnh địa điểm, tên luôn hiện. Người dùng không cần biết mình muốn gì — pan là câu hỏi. corner tự search theo vùng xem, Places vẫn giữ ô search nhưng ưu tiên gợi ý chủ đề.",
+          "tradeoff": "Cần kho ảnh lớn; khu đông pin → quá tải label (corner b3); khó chạm tới mục tiêu cụ thể."
+        },
+        {
+          "name": "Search-first, nhiệm vụ ràng buộc",
+          "apps": "Tock · Chick-fil-A · Klook",
+          "desc": "Mục tiêu rõ từ đầu: đặt bàn, chọn nhà trong hệ thống, mua vé. Form + filter + list có điều kiện đi kèm (giờ, giá, slot) — map chỉ để xác nhận vị trí hoặc xem phân bố.",
+          "tradeoff": "Hiệu quả, ít dư thừa; nhưng khô — không nuôi cảm hứng khám phá; phụ thuộc data chất lượng (slot, giá, giờ mở cửa)."
+        },
+        {
+          "name": "Map như sổ tay quanh điểm neo",
+          "apps": "Airbnb · PamPam",
+          "desc": "Map neo quanh 1 điểm chính (chỗ ở / stops của itinerary). Search nghĩa là thêm tham chiếu vào map, kết quả gắn ngữ cảnh cá nhân: đường đi từ nhà đến cafe, route đánh số giữa các stop kèm thời gian đi bộ.",
+          "tradeoff": "Đúng cho planning trước chuyến đi; không thay được discovery đại trà; mode edit + công cụ vẽ tay làm UI phức tạp đáng kể."
+        }
+      ]
+    },
+    "states": {
+      "rows": [
+        {
+          "state": "Query trống → gợi ý chủ đề",
+          "desc": "Travel query gợi ý theo chủ đề/địa điểm + nút «Back to the map» làm lối thoát an toàn",
+          "refs": [
+            {
+              "section": "Places — Searching Places",
+              "steps": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Autocomplete tách intent",
+          "desc": "Nhóm hoàn thiện câu query (icon ↖) tách khỏi nhóm địa điểm cụ thể (ảnh + address, icon →)",
+          "refs": [
+            {
+              "section": "Places — Searching Places",
+              "steps": [
+                3,
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Autocomplete có icon theo loại",
+          "desc": "Kết quả mang icon loại địa điểm (pin / dao-nĩa / cà phê)",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "state": "Pin đa ngữ nghĩa",
+          "desc": "Ảnh thật, logo thương hiệu cho địa điểm curated kèm dấu ✳, placeholder xám trung thực khi không có ảnh",
+          "refs": [
+            {
+              "section": "Places — Map",
+              "steps": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Pin trạng thái khả dụng",
+          "desc": "Đỏ = có hỗ trợ app; xám = không",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 1
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 6
+            }
+          ]
+        },
+        {
+          "state": "Pin emoji + route đánh số",
+          "desc": "Stops của itinerary là emoji lớn đánh số; pills «4 mins» giữa các chặng",
+          "refs": [
+            {
+              "section": "PamPam — Place detail",
+              "step": 1
+            },
+            {
+              "section": "PamPam — Searching map",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "state": "Re-search theo pan",
+          "desc": "Pill «searching» + spinner tự chạy khi pan; «search here» khi vùng xem chưa có kết quả; «Search this area» dạng lời mời",
+          "refs": [
+            {
+              "section": "corner — Searching for places in an area",
+              "steps": [
+                1,
+                4
+              ]
+            },
+            {
+              "section": "Tock — Searching (via map)",
+              "step": 2
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "state": "Kết quả gắn điều kiện nhiệm vụ",
+          "desc": "Filter chips (Today · 7:00 PM · 2 guests · Reservations) trước khi tìm; time pills có giá ngay trong sheet kết quả",
+          "refs": [
+            {
+              "section": "Tock — Searching (via map)",
+              "steps": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Giờ mở cửa trong list",
+          "desc": "«Opens at 7:00 AM CDT» từng dòng kết quả",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 4
+            }
+          ]
+        },
+        {
+          "state": "Chọn từ list → map sync",
+          "desc": "Map pan tới điểm, card kết quả highlight + CTA",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 5
+            },
+            {
+              "section": "Klook — View map",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "state": "Card provenance + social proof",
+          "desc": "«saved from instagram · 6 days ago», «discovered by … · last week», đếm lượt want-to-try, badge trending / newly opened",
+          "refs": [
+            {
+              "section": "corner — Searching for places in an area",
+              "steps": [
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Empty state có hướng dẫn",
+          "desc": "List yêu thích trống → «Use the heart to start saving…»",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "state": "Overlay giải thích giá trị",
+          "desc": "«You can add ones you want to visit to the map for reference» — 1 câu nói rõ vì sao dùng",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "state": "Loading",
+          "desc": "Logo spinner + «Recently searched» hiện lúc chờ",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "state": "«Không hỗ trợ» báo 2 lớp",
+          "desc": "Tooltip trên map + banner cảnh báo trong card, CTA bị thay",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 6
+            }
+          ]
+        },
+        {
+          "state": "Route preview",
+          "desc": "Đường đứt nét từ chỗ ở → điểm, pill «15 min» đổi mode di chuyển tại chỗ",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "step": 4
+            }
+          ]
+        },
+        {
+          "state": "Detail / lightbox",
+          "desc": "Card chi tiết dark (category mono-caps, pill open/closed, feature chips); lightbox ảnh full",
+          "refs": [
+            {
+              "section": "Places — Map",
+              "step": 2
+            },
+            {
+              "section": "PamPam — Place detail",
+              "steps": [
+                2,
+                3
+              ]
+            }
+          ]
+        },
+        {
+          "state": "Map trắng chỉ hiện stops",
+          "desc": "Không POI nền → route + label nổi bật tuyệt đối",
+          "refs": [
+            {
+              "section": "PamPam — Place detail",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "state": "Edit + annotation",
+          "desc": "Toggle «Edit», drag sắp xếp section, toolbar vẽ tay (pin, highlighter, text, sticker, palette)",
+          "refs": [
+            {
+              "section": "PamPam — Searching map",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "state": "Tile map làm CTA",
+          "desc": "Map nhỏ trong hero gallery mở modal map lớn",
+          "refs": [
+            {
+              "section": "Klook — View map",
+              "steps": [
+                1,
+                2
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "good": {
+      "items": [
+        {
+          "text": "Pin mang thông tin, không phải trang trí — mỗi loại pin nói 1 chuyện: ảnh thật = «nhìn trước chỗ này», logo + ✳ = «có máy chọn», xám = «chưa có ảnh, nói thật với bạn», đỏ/xám = «dùng được/không dùng được», emoji số = «chặng này của lịch trình bạn».",
+          "refs": [
+            {
+              "section": "Places — Map",
+              "steps": [
+                1,
+                2
+              ]
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 1
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 6
+            },
+            {
+              "section": "PamPam — Searching map",
+              "step": 1
+            }
+          ],
+          "linkLabel": "NN/g — Recognition Rather Than Recall",
+          "linkUrl": "https://www.nngroup.com/articles/recognition-and-recall/"
+        },
+        {
+          "text": "Re-search theo pan, không bắt gõ lại — đổi vùng xem là hệ thống tự tìm lại, feedback tường minh 3 trạng thái: đang tìm (spinner), mời tìm («search here»), mời theo ngữ cảnh («Search this area»). Chi phí thao tác gần bằng 0.",
+          "refs": [
+            {
+              "section": "corner — Searching for places in an area",
+              "steps": [
+                1,
+                4
+              ]
+            },
+            {
+              "section": "Tock — Searching (via map)",
+              "step": 2
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 1
+            }
+          ],
+          "linkLabel": "NN/g — Interaction Cost",
+          "linkUrl": "https://www.nngroup.com/articles/interaction-cost-definition/"
+        },
+        {
+          "text": "Chặn lỗi «địa điểm vô dụng» 2 lớp — pin xám dự báo trước khi tap, tooltip + banner giải thích khi tap, và gỡ CTA thay vì để nút chết.",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "steps": [
+                1,
+                6
+              ]
+            }
+          ],
+          "linkLabel": "NN/g — 10 Heuristics #5: Error Prevention",
+          "linkUrl": "https://www.nngroup.com/articles/ten-usability-heuristics/"
+        },
+        {
+          "text": "Query trống ≠ dead end — gợi ý travel query theo chủ đề + nút quay về map an toàn; người dùng mới có việc để làm ngay.",
+          "refs": [
+            {
+              "section": "Places — Searching Places",
+              "steps": [
+                1,
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Autocomplete tách nhóm intent — hoàn thiện từ khoá và địa điểm cụ thể là 2 nhu cầu khác nhau; tách nhóm + icon riêng giúp chọn đúng nhanh hơn.",
+          "refs": [
+            {
+              "section": "Places — Searching Places",
+              "steps": [
+                3,
+                4
+              ]
+            },
+            {
+              "section": "Airbnb — Searching map",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "text": "Kết quả luôn kèm điều kiện chốt deal — Tock nhét giá vào time pill («$225 × 2»); Chick-fil-A kèm giờ mở cửa từng dòng; Klook kèm rating + lượt booked + giá sale. Ra quyết định ngay trong kết quả, không phải vào từng trang con.",
+          "refs": [
+            {
+              "section": "Tock — Searching (via map)",
+              "steps": [
+                1,
+                2
+              ]
+            },
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 4
+            },
+            {
+              "section": "Klook — View map",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "text": "Social proof dạng tín hiệu ngắn — nguồn gốc («saved from instagram», «discovered by stokebuilder») + đếm lượt (81/92) + badge trạng thái (trending/newly opened): đủ bằng chứng xã hội mà không cần đọc review dài.",
+          "refs": [
+            {
+              "section": "corner — Searching for places in an area",
+              "steps": [
+                5,
+                6
+              ]
+            }
+          ]
+        },
+        {
+          "text": "Overlay search giải thích giá trị trước khi dùng — 1 câu nói rõ «thêm điểm muốn ghé vào map để tham khảo», xoá rào cản «map này search để làm gì?».",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "text": "Kết quả route có thời gian + đổi mode tại chỗ — pill «15 min ⌄» vừa trả lời «đi bao lâu» vừa cho đổi phương tiện không rời màn hình.",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "step": 4
+            }
+          ]
+        },
+        {
+          "text": "Map chỉ hiện đúng phạm vi quan tâm — PamPam không vẽ POI nền nên route + «4 mins» nổi bật tuyệt đối; đối lập với map đầy POI Google màu mè.",
+          "refs": [
+            {
+              "section": "PamPam — Place detail",
+              "step": 1
+            },
+            {
+              "section": "Airbnb — Searching map",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "text": "Số trên pin khớp thứ tự list — dò map ↔ list không cần đọc tên.",
+          "refs": [
+            {
+              "section": "Klook — View map",
+              "steps": [
+                2,
+                3
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "avoid": {
+      "items": [
+        {
+          "text": "Hiện tên tất cả pin cùng lúc — zoom vào khu đông của corner, label in hoa chồng chéo lên nhau và lên chữ đường phố. Nên chỉ hiện tên khi hover/chọn, hoặc density-aware.",
+          "refs": [
+            {
+              "section": "corner — Searching for places in an area",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "text": "Copy lỗi lặp ở màn chốt — sheet đặt bàn của Tock hiện «Reservation Reservation / Join us!» — lỗi template ngay bước quan trọng nhất của flow đặt chỗ.",
+          "refs": [
+            {
+              "section": "Tock — Searching (via map)",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "text": "Overlay search trống trơn — chỉ có ô input + keyboard, không suggestion, không recent, không category; so với Places/Airbnb là mất cơ hội giúp user bắt đầu.",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 2
+            },
+            {
+              "section": "Places — Searching Places",
+              "steps": [
+                1,
+                2
+              ]
+            },
+            {
+              "section": "Airbnb — Searching map",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "text": "Loading thay bằng logo thương hiệu — logo spinner không nói gì về hình dạng kết quả sắp tới; skeleton giữ ngữ cảnh tốt hơn. «Recently searched» hiện kèm dễ bị coi là noise.",
+          "refs": [
+            {
+              "section": "Chick-fil-A — Searching a restaurant",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "text": "Emoji rating không có chuẩn — vui nhưng mơ hồ (globe nhiều = khách du lịch đông?), không có số liệu đối chiếu. Dùng thì cần legend/tooltip.",
+          "refs": [
+            {
+              "section": "PamPam — Place detail",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "text": "Pin chồng nhau không có cluster — cụm Sentosa của Klook đè lên nhau thành đốm đỏ không đọc được; corner khu downtown cũng vậy.",
+          "refs": [
+            {
+              "section": "Klook — View map",
+              "step": 2
+            },
+            {
+              "section": "corner — Searching for places in an area",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "text": "POI nền màu mè cạnh pin riêng của app — base map Google còn hiển thị POI vàng/xanh/lục rực rỡ, pin chính (house đen) mất ưu tiên thị giác. Đối chứng: PamPam tắt sạch POI nên route nổi.",
+          "refs": [
+            {
+              "section": "Airbnb — Searching map",
+              "steps": [
+                1,
+                4
+              ]
+            },
+            {
+              "section": "PamPam — Place detail",
+              "step": 1
+            }
+          ]
+        }
+      ]
+    },
+    "ideas": {
+      "items": [
+        "Cluster/heatmap khi pin vượt ngưỡng (~30+) — giải quyết đồng thời lỗi label dày và pin chồng nhau.",
+        "Toggle list-view cho app map-first — khi pin quá nhiều, list xếp theo khoảng cách là lối thoát rẻ.",
+        "Skeleton pin khi ảnh chưa load — pin ảnh của Places/corner phụ thuộc mạng; placeholder xám trung thực là nền tốt để phát triển thành skeleton.",
+        "Câu hỏi mở: pan ra vùng không có kết quả (corner b4 — Daly City) thì sau spinner là gì? Ảnh không cho thấy state «vùng này chưa có dữ liệu» — nếu không có, đó là khoảng trống thật."
+      ]
+    },
+    "note": "Giới hạn: mọi nhận xét dựa trên ảnh tĩnh — không đánh giá được animation chuyển state, xử lý lỗi mạng, permission location, hay hành vi sau bước cuối mỗi flow. «Không thấy trong ảnh» ≠ «không tồn tại»."
+  }
 };
 
 MobbinGallery.render(DATA);

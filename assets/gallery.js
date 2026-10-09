@@ -145,6 +145,85 @@
     return h + `</div>`;
   }
 
+  /* ---------- flow review (DATA.review) ----------
+     Schema: { tldr, goal{intro?,rows[{flow,entry,exit,note}]},
+               camps{items[{name,apps,desc,tradeoff}]},
+               states{rows[{state,desc,refs}]},
+               good{items[{text,refs?,linkLabel?,linkUrl?}]},
+               avoid{items[...]}, ideas{items: string | {text}}, note? }
+     refs: [{section: "Places — Map", step: 2} | {section, steps: [1,2]}]
+     — section khớp theo prefix của section name (cắt đuôi "(N bước)"),
+       mỗi chip render thumbnail + bấm mở lightbox đúng ảnh. */
+
+  let refLookup = {};
+
+  function buildRefLookup(data) {
+    refLookup = {};
+    let i = 0;
+    (data.sections || []).forEach((s) => {
+      const prefix = s.name.replace(/\s*\(\d+\s*bước\)\s*$/, "").trim();
+      s.items.forEach((item) => {
+        if (item.step != null) refLookup[prefix + "|" + item.step] = i;
+        i++;
+      });
+    });
+  }
+
+  function refChips(refs) {
+    if (!refs || !refs.length) return "";
+    const chips = refs.map((r) => {
+      const prefix = String(r.section || "").trim();
+      const steps = r.steps || (r.step != null ? [r.step] : []);
+      if (!prefix || !steps.length) return "";
+      const stepLabel = steps.length > 1 ? `b${steps[0]}–${steps[steps.length - 1]}` : `b${steps[0]}`;
+      const label = `${prefix} · ${stepLabel}`;
+      const idx = refLookup[prefix + "|" + steps[0]];
+      const item = idx != null ? galleryItems[idx] : null;
+      if (!item) return `<span class="ref missing">${escapeHtml(label)}</span>`;
+      return `<button type="button" class="ref" data-index="${idx}" title="${escapeHtml(item.alt || item.app || "")}"><img src="${item.image}" alt="" loading="lazy"><span>${escapeHtml(label)}</span></button>`;
+    });
+    return chips.join("") ? `<span class="refs">${chips.join("")}</span>` : "";
+  }
+
+  function reviewItemHtml(i) {
+    const link = i.linkLabel && i.linkUrl
+      ? ` <a class="ext-link" href="${i.linkUrl}" target="_blank" rel="noopener">${escapeHtml(i.linkLabel)}</a>`
+      : "";
+    return `<li>${i.text}${link}${refChips(i.refs)}</li>`;
+  }
+
+  function reviewHtml(review) {
+    if (!review) return "";
+    let h = `<div class="report">`;
+    if (review.tldr) h += `<p class="report-tldr">${review.tldr}</p>`;
+    if (review.goal) {
+      const rows = review.goal.rows
+        .map((r) => `<tr><td><b>${escapeHtml(r.flow)}</b></td><td>${escapeHtml(r.entry)}</td><td>${escapeHtml(r.exit)}</td><td>${escapeHtml(r.note)}</td></tr>`)
+        .join("");
+      h += qBlock("1", "Goal & hành trình",
+        (review.goal.intro ? `<p>${escapeHtml(review.goal.intro)}</p>` : "") +
+        `<table><tr><th>Flow</th><th>Entry</th><th>Exit</th><th>Đặc điểm</th></tr>${rows}</table>`);
+    }
+    if (review.camps) {
+      h += qBlock("2", "Trường phái", `<div class="camp">` + review.camps.items.map((c) =>
+        `<div class="camp-card"><b>${escapeHtml(c.name)}</b><div class="ds">${escapeHtml(c.apps)}</div><p>${escapeHtml(c.desc)}</p><p class="tradeoff"><b>Tradeoff:</b> ${escapeHtml(c.tradeoff)}</p></div>`
+      ).join("") + `</div>`);
+    }
+    if (review.states) {
+      const rows = review.states.rows
+        .map((r) => `<tr><td><b>${escapeHtml(r.state)}</b></td><td>${escapeHtml(r.desc)}</td><td>${refChips(r.refs)}</td></tr>`)
+        .join("");
+      h += qBlock("3", "Trạng thái đáng chú ý (thấy trong ảnh)",
+        `<table><tr><th>State</th><th>Mô tả</th><th>Thấy ở</th></tr>${rows}</table>`);
+    }
+    if (review.good) h += qBlock("4", "Đáng học", `<ol>${review.good.items.map(reviewItemHtml).join("")}</ol>`);
+    if (review.avoid) h += qBlock("5", "Nên tránh / hạn chế", `<ol>${review.avoid.items.map(reviewItemHtml).join("")}</ol>`);
+    if (review.ideas) h += qBlock("6", "Đề xuất ngoài data — suy đoán, không có dẫn chứng trong ảnh",
+      `<ul>${review.ideas.items.map((i) => `<li>${escapeHtml(typeof i === "string" ? i : i.text)}</li>`).join("")}</ul>`);
+    h += noteHtml(review.note);
+    return h + `</div>`;
+  }
+
   function sourcesHtml(sources) {
     if (!sources || !sources.length) return "";
     return `<div class="sources"><b>Nguồn & phương pháp</b><ul>${sources
@@ -168,9 +247,10 @@
     if (data.sections) {
       data.sections.forEach((s) => s.items.forEach((item) => galleryItems.push(item)));
     }
+    buildRefLookup(data);
     const counter = { i: 0 };
     const sectionsHtml = (data.sections || []).map((s) => sectionHtml(s, counter)).join("");
-    app.innerHTML = reportHtml(data.report) + sectionsHtml + sourcesHtml(data.sources);
+    app.innerHTML = reportHtml(data.report) + reviewHtml(data.review) + sectionsHtml + sourcesHtml(data.sources);
   }
 
   let lightboxEl = null;
@@ -240,6 +320,11 @@
   }
 
   document.addEventListener("click", (e) => {
+    const ref = e.target.closest(".ref[data-index]");
+    if (ref) {
+      openLightbox(Number(ref.dataset.index));
+      return;
+    }
     const wrap = e.target.closest(".card-img-wrap");
     if (wrap) openLightbox(Number(wrap.dataset.index));
   });
