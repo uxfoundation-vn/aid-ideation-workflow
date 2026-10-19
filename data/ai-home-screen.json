@@ -1,0 +1,163 @@
+{
+  "slug": "ai-home-screen",
+  "date": "2026-10-13",
+  "category": "flow",
+  "title": "Screen Refs: Home của AI assistant (iOS)",
+  "subtitle": "Nguồn: Mobbin search_screens — 17 màn home/màn chờ trước khi chat, chia theo 3 kiểu layout. Tham chiếu cho Pengo Hỏi đáp (mascot + tab chế độ + input card + gợi ý theo lịch trình). Bấm ảnh để phóng to, bấm link để xem bản gốc.",
+  "sections": [
+    {
+      "name": "Mascot / nhân vật ở giữa — giống Pengo nhất (7)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Tiimo",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/01.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/9LcKzeJU",
+          "url": "https://mobbin.com/screens/0640ab8f-9dbf-4612-8f3f-7295bd697ec6",
+          "alt": "Nền tối, mascot 3D ở giữa + greeting 2 dòng; 2 hàng chip gợi ý cuộn ngang có emoji nằm ngay trên input; input dính đáy có chip ngôn ngữ + nút Speak"
+        },
+        {
+          "app": "Lovi",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/02.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/cB2PGAZh",
+          "url": "https://mobbin.com/screens/88727b10-5bb3-47f7-85c8-b770ca3716c9",
+          "alt": "Sheet modal: mascot mặt cười to + tiêu đề lớn 'Hi! I'm Lóvi'; 'Start a chat' là bubble gợi ý cuộn ngang 2 hàng, có History bên dưới; không có input, CTA nổi 'New Chat'"
+        },
+        {
+          "app": "Swiggy",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/03.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/DkimYrVh",
+          "url": "https://mobbin.com/screens/04517760-a1a9-4fee-8b77-c6fd6d0cf2d3",
+          "alt": "Logo AI ở giữa, greeting gradient theo ngữ cảnh ẩm thực; 2 hàng chip gợi ý chạy ngang (marquee); input dính đáy"
+        },
+        {
+          "app": "Mindvalley",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/04.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/TEF9U7nL",
+          "url": "https://mobbin.com/screens/0ce1cc77-22c6-4c0c-84bf-4db07d7f11a2",
+          "alt": "Icon AI + 'Hi, Alex Smith' ở trên; gợi ý dạng card 2×2 dồn xuống sát input; input pill có mic + disclaimer dưới"
+        },
+        {
+          "app": "Anything",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/05.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/NHiTYMQ5",
+          "url": "https://mobbin.com/screens/60faa407-885a-4135-a989-5558306b879b",
+          "alt": "Tối giản: logo mờ + câu hỏi ở giữa; 1 hàng chip ngắn cuộn ngang ngay trên input card (icon ảnh, chip mode Auto, mic)"
+        },
+        {
+          "app": "Alan",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/06.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/q6s9TN5x",
+          "url": "https://mobbin.com/screens/f3b30253-bcee-43d6-a2b4-18035a9e69d1",
+          "alt": "Mascot 3D (gấu Mo) đứng trong banner phong cảnh phía trên, mascot tự chào trong bubble chat đầu tiên"
+        },
+        {
+          "app": "Grok",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/07.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/XwWrkfHZ",
+          "url": "https://mobbin.com/screens/2974e00b-eefb-4990-9d8a-5dc1d80b60b6",
+          "alt": "Companion mode: nhân vật full-screen trên nền phong cảnh, thanh điều khiển đáy mic / video / input + nút Text"
+        }
+      ]
+    },
+    {
+      "name": "Greeting căn trái + chip/card hành động — kiểu chatbot chung (6)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Google Gemini",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/08.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/UJ67BOzM",
+          "url": "https://mobbin.com/screens/1aa20a12-e246-451c-a264-aafdce98a652",
+          "alt": "'Hi Alex / Where should we start?' căn trái, chip hành động dọc có icon (Create image, Help me learn…), card welcome có thể đóng; input dính đáy với +, tool, Fast, mic, live"
+        },
+        {
+          "app": "Google Gemini",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/09.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/5hcbTh8T",
+          "url": "https://mobbin.com/screens/1c38299a-122a-4ad3-b61b-1dfed69383a8",
+          "alt": "Trạng thái focus: input card bung to lên trên bàn phím, chip tool đang chọn (Deep Research), hàng nút Search / Files bên dưới"
+        },
+        {
+          "app": "Google",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/10.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/oGzO7ybm",
+          "url": "https://mobbin.com/screens/89c43e4c-dd61-4a73-94b7-40eda3b73542",
+          "alt": "Switch Google/Gemini trên cùng; 'Good morning' gradient lớn; card gợi ý cuộn ngang có icon; list Recent; input card cao với mic + camera"
+        },
+        {
+          "app": "Opera",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/11.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/w4cAjTAq",
+          "url": "https://mobbin.com/screens/3eb54a08-4232-48a5-a4bf-236203fed7bb",
+          "alt": "Tiêu đề 'ASK AI' lớn; carousel card ảnh lớn làm gợi ý chủ đề; input card + đính kèm ảnh ở đáy"
+        },
+        {
+          "app": "Manus",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/12.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/jt7px3EA",
+          "url": "https://mobbin.com/screens/076c5495-0a54-467a-82ea-defe2c64c016",
+          "alt": "Chỉ 1 câu hỏi serif ở giữa + chip upsell; input card đáy có +, connector Gmail, chip tool"
+        },
+        {
+          "app": "X (Grok)",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/13.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/1xPvZIGQ",
+          "url": "https://mobbin.com/screens/b3ce8fb3-b5a2-4a13-9d65-5feb1656f4cd",
+          "alt": "Selector mode 'Auto' trên header; banner tin mới; card hành động lớn cuộn ngang (Create Images, Edit Image, Voice) ngay trên input; có bottom tab bar"
+        }
+      ]
+    },
+    {
+      "name": "AI trong app du lịch — gợi ý theo địa điểm/lịch trình (4)",
+      "layout": "grid",
+      "items": [
+        {
+          "app": "Trip.com",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/14.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/jXT6MWhR",
+          "url": "https://mobbin.com/screens/bef05996-a613-40a1-8fff-58569acd0e05",
+          "alt": "TripGenie nhúng ngay trong home: card câu hỏi gợi ý theo điểm đến, nút tắt Menu Assistant + Translate (giống tab Dịch Menu của Pengo), input dính đáy"
+        },
+        {
+          "app": "Wanderlog",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/15.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/ooatvOzK",
+          "url": "https://mobbin.com/screens/256b13ca-0dd7-4875-93ab-c05d1a115b14",
+          "alt": "AI Assistant gắn với 1 điểm đến: chip ví dụ 'Best places to eat in New York'…; dưới input ghi rõ 'Asking questions about New York · Change' — ngữ cảnh đổi được"
+        },
+        {
+          "app": "Mindtrip",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/16.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/dv1aY2oF",
+          "url": "https://mobbin.com/screens/5de94815-650d-40eb-addc-59d5bb15347c",
+          "alt": "Home du lịch: 'For you in 📍Civic Center' theo vị trí, card ảnh gợi ý; input 'Ask anything' dính ngay trên tab bar"
+        },
+        {
+          "app": "Booking.com",
+          "platform": "ios",
+          "image": "../assets/shots/ai-home-screen/17.webp",
+          "sourceImage": "https://mobbin.com/api/mcp/short/DH25QI5u",
+          "url": "https://mobbin.com/screens/14dbe6ec-9415-414d-a233-2d8835efbcf3",
+          "alt": "Tab Destination / AI search ở trên; ô nhập lớn 'Search in your own words' + 'Try these out' card ví dụ"
+        }
+      ]
+    }
+  ]
+}
