@@ -25,6 +25,16 @@ Kiểm tra trước khi chạy: có tool `mcp__mobbin__*` (search_flows / search
 - Riêng component.gallery không có component đó thì không phải lỗi, theo skill `component-research`.
 - Có phần nào tự bổ sung ngoài Mobbin (suy luận, kiến thức sẵn) thì ghi rõ là "ngoài data", không trộn với dẫn chứng có ảnh.
 
+## Xem / mở kho
+
+Pane trình duyệt mở `file://` thành bản tĩnh, mất CSS/JS/ảnh. Khi chú bảo "xem kho" / "mở kho" / "mở trang research":
+
+1. Chạy server tĩnh bằng Bash nền (`run_in_background`): `cd <thư mục repo> && exec python3 -m http.server 8765 --bind 127.0.0.1`. Cổng đang có server chạy rồi thì dùng lại.
+2. `curl` kiểm tra `http://127.0.0.1:8765/index.html` trả 200.
+3. Mở `http://localhost:8765/index.html` (hoặc `/research/<slug>.html`) trong pane.
+
+Không dùng `preview_start` / `launch.json`: server do app bật không có quyền đọc thư mục Documents (lỗi `getcwd: Operation not permitted`, thử 2026-10-22). Server tắt khi đóng session.
+
 ## Quy tắc khác
 
 - Không commit khi chưa hỏi. Không bao giờ commit `component-gallery/cache/`.
