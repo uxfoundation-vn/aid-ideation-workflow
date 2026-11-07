@@ -22,10 +22,16 @@ Trước khi làm từ Bước 2 trở đi, đọc `.claude/skills/_shared/ARCHI
 
 ## Bước 1b — Search trên component.gallery (song song với 1a)
 
-1. Xác định slug tiếng Anh kebab-case của component (vd "text-input", "empty-state", "badge"). Nếu không chắc site có component này, đọc `component-gallery/cache/_index.json` (danh sách 60 component); nếu file chưa tồn tại, chạy `node component-gallery/crawl.mjs list` trước.
-2. Chạy `node component-gallery/crawl.mjs fetch <slug>` (từ thư mục gốc repo). Script tự cache — nếu `component-gallery/cache/<slug>.json` đã tồn tại thì skip fetch, dùng lại luôn. Không tự thêm `--force` trừ khi user yêu cầu làm mới data.
-3. Nếu component không nằm trong danh sách 60 của site, bỏ qua bước này — chỉ dùng kết quả Mobbin, không phải lỗi.
-4. Đọc `component-gallery/cache/<slug>.json`, lấy:
+1. **Luôn tra bằng `find`, không đoán slug.** Site gộp nhiều tên vào một trang (Chip nằm trong Badge, Snackbar trong Toast, Stepper trong Progress indicator), gõ slug "chip" sẽ không thấy gì. Chạy từ thư mục gốc repo:
+   ```bash
+   node component-gallery/crawl.mjs find <tên>
+   ```
+   Lệnh dò tên chính + tên gọi khác ở trang danh sách, rồi tên trong ví dụ của các trang đã cache; tự fetch (có cache) trang khớp và ghi kết quả vào `component-gallery/cache/_find-<tên>.json`. Không thấy thì chạy lại với `--all` (tải đủ 60 trang một lần, ~2 phút) để dò tên trong ví dụ của mọi trang. Không tự thêm `--force` trừ khi user yêu cầu làm mới data.
+2. Đọc `_find-<tên>.json`, mỗi trang khớp có `matchedBy`:
+   - `tên chính` → trang là đúng component này, dùng cả trang như bình thường (`cache/<slug>.json`).
+   - `tên gọi khác` / `tên trong ví dụ` (có `warning`) → **trang gộp**. Chỉ dùng `matchedExamples` (ví dụ có tên khớp). Không lấy `prose`, `usage-guidelines`, `resources`, `featureFacets` của trang đó làm chuẩn cho component này: chúng viết cho tên chính (vd guideline Badge nói về badge tĩnh, áp cho chip bấm được sẽ sai). Ghi rõ trong `report.note` là dữ liệu lấy từ trang gộp nào.
+3. Nếu `find` (cả `--all`) không thấy, bỏ qua bước này — chỉ dùng kết quả Mobbin, không phải lỗi.
+4. Với trang đúng component (`tên chính`), đọc `component-gallery/cache/<slug>.json`, lấy:
    - `aliases`, `nameDistribution` → các tên gọi khác của component này ở các design system khác nhau.
    - `techFacets`, `featureFacets` → biến thể tech/tính năng phổ biến (thống kê chéo nhiều design system, không phải props/states của 1 bản cụ thể).
    - `examples[]` có `screenshot` → dùng làm 1 section ảnh riêng (xem Bước 2).
@@ -35,18 +41,21 @@ Trước khi làm từ Bước 2 trở đi, đọc `.claude/skills/_shared/ARCHI
 
 Đây là nguồn chính cho purpose/states/best-practice của report. **Chỉ chạy khi cache CHƯA có field `resourceSummaries`** (đã tóm rồi thì đọc lại, không fetch lại).
 
-1. Chọn tối đa 3 link từ `prose.resources`:
+Trang gộp không có `resources` dành riêng cho component này → thay bằng docs gốc của các DS trong `matchedExamples` (field `url`), hỏi đúng 4 mục như dưới.
+
+1. Chọn **6 link** từ `prose.resources` (hoặc `matchedExamples` nếu trang gộp), cần tối thiểu **3 link đọc được**:
    - Ưu tiên nguồn UX guideline: Balsamiq, Nielsen Norman Group, Open UI, UI Playbook, blog cá nhân của expert UX (vd adrianroselli.com, daverupert.com).
    - Bỏ link thư viện code (uiverse.io…), link dev/caniuse/css-tricks, Medium (thường 403).
 2. WebFetch từng link với prompt chuẩn (thay `<tên component>`):
    > Bài viết về component `<tên>`. Tóm tắt bằng tiếng Việt theo đúng 4 mục: 1) Dùng để làm gì (purpose/use cases); 2) Khác gì so với component liên quan nếu bài có nhắc; 3) Liệt kê các state đúng tên từng state; 4) Best practice quan trọng nhất (3-6 gạch đầu dòng, cả về label/placeholder nếu bài nhắc). Mục nào không đề cập thì ghi rõ "không đề cập".
-3. Link lỗi (403, timeout) → skip, ghi chú vào `report.note`.
+3. Link lỗi (404, 403, timeout, trang chỉ có khung JS không ra nội dung) → lấy link kế tiếp, và **ghi từng link chết** vào `report.note` + field `deadLinks` trong cache. Link rot trên component.gallery khá nhiều (thử chip: 2/5 link 404). Hết link mà chưa đủ 3 nguồn đọc được thì vẫn viết report, ghi rõ thiếu nguồn.
 4. **Ghi kết quả vào cache** để lần sau không fetch lại — thêm field vào `component-gallery/cache/<slug>.json`:
    ```json
    "resourceSummaries": [
      { "url": "https://balsamiq.com/...", "title": "Text Input Guidelines — Balsamiq",
        "summary": "…4 mục tiếng Việt đã tóm, giữ nguyên link ảnh nếu WebFetch trả về…" }
-   ]
+   ],
+   "deadLinks": [{ "url": "https://…", "reason": "404" }]
    ```
 
 ## Bước 2 — Viết `data/<slug>.json`

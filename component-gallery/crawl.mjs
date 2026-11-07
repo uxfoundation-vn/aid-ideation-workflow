@@ -17,6 +17,8 @@
  *   node crawl.mjs list                      # lấy index 61 component + số example
  *   node crawl.mjs fetch accordion badge     # crawl từng component -> cache/<slug>.json
  *   node crawl.mjs fetch --all               # crawl toàn bộ (delay 1.5s/req)
+ *   node crawl.mjs find chip                 # tra theo tên + tên gọi khác (Chip → trang Badge)
+ *   node crawl.mjs find "text field" --all   # kéo đủ 60 trang rồi dò cả tên trong ví dụ
  *   node crawl.mjs to-data accordion         # xuất sample-output/cg-accordion.json (schema repo)
  *   node crawl.mjs to-data accordion --to-repo  # ghi thẳng vào ../data/
  *
@@ -101,15 +103,21 @@ function parseIndex(html) {
   const seen = new Set();
   // Không scope theo <ul id="components"> vì card có <ul>/<li> lồng nhau (tag tech/features)
   // -> regex non-greedy sẽ bị cắt sớm. Thay vào đó lấy mọi <li data-name=…> có link /components/.
-  for (const li of html.match(/<li[^>]*data-name="[^"]*"[\s\S]*?href="\/components\/[^"]*"/g) ?? []) {
+  for (const m of html.matchAll(/<li[^>]*data-name="[^"]*"[\s\S]*?href="\/components\/[^"]*"/g)) {
+    const li = m[0];
+    // Đoạn sau link (tới card kế) chứa dòng tên gọi khác
+    const tail = html.slice(m.index + li.length, m.index + li.length + 3000).split(/<li[^>]*data-name=/)[0];
     const open = li.match(/<li[^>]*>/)[0];
     const name = attr(open, "data-name");
     const href = (li.match(/href="\/components\/([^"#?]+)"/) || [])[1];
     if (!name || !href || seen.has(href)) continue;
     seen.add(href);
+    // Tên gọi khác nằm ở <p class="… italic"> ngay dưới tên (vd Badge → "Tag, Label, Chip")
+    const aliasRaw = (tail.match(/<p[^>]*\bitalic\b[^>]*>([\s\S]*?)<\/p>/) || [])[1];
     out.push({
       slug: href.replace(/\/$/, ""),
       name,
+      aliases: aliasRaw ? splitList(stripTags(aliasRaw)) : [],
       exampleCount: Number(attr(open, "data-example-count") ?? 0),
       url: `${BASE}/components/${href.replace(/\/$/, "")}/`,
     });
@@ -230,6 +238,69 @@ async function cmdFetch(slugs, { force, limit }) {
   }
 }
 
+/**
+ * find <tên>: tra component theo cả tên chính lẫn tên gọi khác.
+ * component.gallery gộp nhiều thứ vào một trang (vd Chip nằm trong Badge), nên gõ slug
+ * "chip" sẽ không thấy. Lệnh này:
+ *  1. Dò tên + aliases trong _index.json (cũ chưa có aliases thì tự chạy lại list).
+ *  2. Fetch (có cache) các trang khớp, lọc riêng examples có componentName chứa <tên>.
+ *  3. Ghi cache/_find-<tên>.json để bước research đọc lại.
+ */
+async function cmdFind(term, { all }) {
+  if (!term) throw new Error("cần tên, vd: node crawl.mjs find chip");
+  const idxPath = path.join(CACHE_DIR, "_index.json");
+  let idx = existsSync(idxPath) ? JSON.parse(await readFile(idxPath, "utf8")) : null;
+  if (!idx || !idx.items.some((i) => Array.isArray(i.aliases))) {
+    await cmdList();
+    idx = JSON.parse(await readFile(idxPath, "utf8"));
+  }
+  // So khớp bỏ khoảng trắng/gạch/hoa thường/số nhiều: "Text field" = "TextField" = "text-fields"
+  const norm = (s) => s.toLowerCase().replace(/[\s\-_]/g, "").replace(/s$/, "");
+  const t = norm(term);
+  const hit = (s) => !!s && norm(s).includes(t);
+
+  // --all: kéo đủ mọi trang về cache trước (một lần, ~1.5s/trang), để dò được cả tên trong ví dụ
+  if (all) await cmdFetch(idx.items.map((i) => i.slug), {});
+  const cached = (slug) => existsSync(path.join(CACHE_DIR, `${slug}.json`));
+  const load = async (slug) => JSON.parse(await readFile(path.join(CACHE_DIR, `${slug}.json`), "utf8"));
+
+  // Tầng 1: tên chính + tên gọi khác ở trang danh sách. Tầng 2: tên trong ví dụ của các trang đã cache.
+  const pages = [];
+  for (const p of idx.items) {
+    if (hit(p.name) || hit(p.slug)) pages.push({ p, matchedBy: "tên chính" });
+    else if (p.aliases.some(hit)) pages.push({ p, matchedBy: "tên gọi khác" });
+    else if (cached(p.slug) && Object.keys((await load(p.slug)).nameDistribution).some(hit))
+      pages.push({ p, matchedBy: "tên trong ví dụ" });
+  }
+
+  const result = { term, fetchedAt: new Date().toISOString().slice(0, 10),
+    scanned: all ? "đủ 60 trang" : `danh sách + ${idx.items.filter((i) => cached(i.slug)).length} trang đã cache`, pages: [] };
+  for (const { p, matchedBy } of pages) {
+    await cmdFetch([p.slug], {});
+    const rec = await load(p.slug);
+    const isMain = matchedBy === "tên chính";
+    const matched = isMain ? rec.examples : rec.examples.filter((e) => hit(e.componentName));
+    result.pages.push({
+      slug: p.slug, name: p.name, aliases: p.aliases, matchedBy,
+      totalExamples: rec.exampleCount,
+      matchedExamples: matched,
+      // Trang gộp: prose/guideline viết cho tên chính, không chắc đúng với <tên>
+      warning: isMain ? null
+        : `Trang "${p.name}" gộp nhiều loại. Chỉ dùng ${matched.length}/${rec.exampleCount} ví dụ tên "${term}"; prose/guideline của trang viết cho ${p.name}, đừng áp thẳng.`,
+    });
+  }
+  await writeFile(path.join(CACHE_DIR, `_find-${t}.json`), JSON.stringify(result, null, 2));
+  console.log(`\nđã dò: ${result.scanned}`);
+  if (!pages.length)
+    console.log(`không thấy "${term}".` + (all ? "" : " Chạy lại với --all để dò tên trong ví dụ của cả 60 trang."));
+  for (const p of result.pages) {
+    console.log(`\n${p.name} (${p.slug}) — khớp ${p.matchedBy}, ${p.matchedExamples.length}/${p.totalExamples} ví dụ`);
+    if (p.warning) console.log(`  ⚠ ${p.warning}`);
+    if (p.matchedBy !== "tên chính")
+      for (const e of p.matchedExamples) console.log(`  · ${e.designSystem} — ${e.componentName}  ${e.url ?? ""}`);
+  }
+}
+
 /** cache/<slug>.json -> data/cg-<slug>.json theo schema gallery của repo */
 async function cmdToData(slug, { groupBy, toRepo }) {
   const rec = JSON.parse(await readFile(path.join(CACHE_DIR, `${slug}.json`), "utf8"));
@@ -290,6 +361,7 @@ async function cmdToData(slug, { groupBy, toRepo }) {
 const argv = process.argv.slice(2);
 const flags = {
   force: argv.includes("--force"),
+  all: argv.includes("--all"),
   toRepo: argv.includes("--to-repo"),
   groupBy: (argv[argv.indexOf("--group-by") + 1] ?? "name").replace(/^--.*/, "name"),
   limit: argv.includes("--limit") ? Number(argv[argv.indexOf("--limit") + 1]) : 0,
@@ -300,9 +372,10 @@ const [cmd, ...rest] = positional;
 try {
   if (cmd === "list") await cmdList();
   else if (cmd === "fetch") await cmdFetch(rest.length ? rest : ["--all"], flags);
+  else if (cmd === "find") await cmdFind(rest.join(" "), flags);
   else if (cmd === "to-data") await cmdToData(rest[0], flags);
   else {
-    console.log("commands: list | fetch <slug…|--all> | to-data <slug>");
+    console.log("commands: list | fetch <slug…|--all> | find <tên> | to-data <slug>");
     process.exit(1);
   }
 } catch (err) {
